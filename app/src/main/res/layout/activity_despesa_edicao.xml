@@ -47,13 +47,29 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Gravar"
-            android:id="@+id/btnGravar" />
+            android:id="@+id/btnGravar"
+            android:layout_weight=".5" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Cancelar"
-            android:id="@+id/btnCancelar" />
+            android:id="@+id/btnCancelar"
+            android:layout_weight=".5" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Apagar"
+            android:id="@+id/btnApagarDespesa"
+            android:layout_gravity="center_horizontal" />
     </LinearLayout>
 
 </LinearLayout>
