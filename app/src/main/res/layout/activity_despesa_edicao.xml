@@ -22,12 +22,14 @@
         android:layout_height="wrap_content"
         android:id="@+id/spnCategoriaDespesa"
         android:focusable="false"
-        android:clickable="false" />
+        android:clickable="false"
+        android:spinnerMode="dropdown" />
 
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/spnStatusCategoria" />
+        android:id="@+id/spnStatusCategoria"
+        android:spinnerMode="dropdown" />
 
     <EditText
         android:layout_width="match_parent"
