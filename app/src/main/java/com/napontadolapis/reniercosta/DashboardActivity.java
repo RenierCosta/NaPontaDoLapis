@@ -1,17 +1,31 @@
 package com.napontadolapis.reniercosta;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
+import com.napontadolapis.reniercosta.DespesaCadastroListActivity;
 
 
-public class DashboardActivity extends ActionBarActivity {
+public class DashboardActivity extends Activity {
+
+    private Button FbtnDespesas;
+
+    public void despesasOnClick(View v){
+        startActivity(new Intent(DashboardActivity.this, DespesaCadastroListActivity.class));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
+
+        FbtnDespesas = (Button) findViewById(R.id.btnDespesas);
     }
 
     @Override
