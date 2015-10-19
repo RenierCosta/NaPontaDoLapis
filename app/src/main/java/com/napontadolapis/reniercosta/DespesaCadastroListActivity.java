@@ -11,6 +11,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,8 +35,14 @@ public class DespesaCadastroListActivity extends ListActivity implements OnItemC
         helper = new DatabaseHelper(this);
         dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
-        setListAdapter(new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_1, listarDespesas()));
+        String[] de = { "descricao" };
+        int[] para = { R.id.edtDescricaoDespesa};
+
+        SimpleAdapter adapter = new SimpleAdapter(this,
+                listarDespesas(), android.R.layout.simple_list_item_1, de, para);
+
+        setListAdapter(adapter);
+
         ListView listView = getListView();
         listView.setOnItemClickListener(this);
     }
@@ -61,6 +68,7 @@ public class DespesaCadastroListActivity extends ListActivity implements OnItemC
 
         for (int i = 0; i < cursor.getCount(); i++) {
             Map<String, Object> item = new HashMap<String, Object>();
+
             String id = cursor.getString(cursor.getColumnIndex("_id"));
             String descricao = cursor.getString(cursor.getColumnIndex("descricao"));
             long vencimento = cursor.getLong(cursor.getColumnIndex("vencimento"));
