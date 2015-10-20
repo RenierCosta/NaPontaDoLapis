@@ -35,11 +35,11 @@ public class DespesaCadastroListActivity extends ListActivity implements OnItemC
         helper = new DatabaseHelper(this);
         dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
-        String[] de = { "descricao" };
-        int[] para = { R.id.edtDescricaoDespesa};
+        String[] de = { "descricao","vencimento" };
+        int[] para = { R.id.lblDescricaoDespesaCadastro, R.id.lblVencimentoDespesaCadastro};
 
         SimpleAdapter adapter = new SimpleAdapter(this,
-                listarDespesas(), android.R.layout.simple_list_item_1, de, para);
+                listarDespesas(), R.layout.activity_despesa_cadastro, de, para);
 
         setListAdapter(adapter);
 
@@ -80,7 +80,7 @@ public class DespesaCadastroListActivity extends ListActivity implements OnItemC
 
             item.put("id", id);
             item.put("descricao", descricao);
-            item.put("vencimento", vencimentoDate);
+            item.put("vencimento", dateFormat.format(vencimentoDate));
             item.put("valor", valor);
             item.put("status", status);
             item.put("categoria_id", categoria_Id);
