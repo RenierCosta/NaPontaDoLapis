@@ -27,6 +27,7 @@ public class DespesaCadastroListActivity extends ListActivity implements OnItemC
 
     private DatabaseHelper helper;
     private SimpleDateFormat dateFormat;
+    private ArrayList<Map<String, Object>> despesas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,11 +50,18 @@ public class DespesaCadastroListActivity extends ListActivity implements OnItemC
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        TextView textView = (TextView) view;
+        Map<String, Object> map = despesas.get(position);
+        String destino = (String) map.get("descricao");
+        String mensagem = "Despesa selecionada: "+ destino;
+        Toast.makeText(this, mensagem, Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(this, DespesaEdicaoActivity.class));
+
+
+        /*TextView textView = (TextView) view;
         String mensagem = "Despesa selecionada: " + textView.getText();
         Toast.makeText(getApplicationContext(), mensagem,
                 Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(this, DespesaEdicaoActivity.class));
+        startActivity(new Intent(this, DespesaEdicaoActivity.class));*/
     }
 
     private List<Map<String, Object>> listarDespesas() {
@@ -64,7 +72,7 @@ public class DespesaCadastroListActivity extends ListActivity implements OnItemC
 
         cursor.moveToFirst();
 
-        ArrayList<Map<String, Object>> depesas = new ArrayList<Map<String, Object>>();
+        despesas = new ArrayList<Map<String, Object>>();
 
         for (int i = 0; i < cursor.getCount(); i++) {
             Map<String, Object> item = new HashMap<String, Object>();
@@ -84,12 +92,12 @@ public class DespesaCadastroListActivity extends ListActivity implements OnItemC
             item.put("valor", valor);
             item.put("status", status);
             item.put("categoria_id", categoria_Id);
-            depesas.add(item);
+            despesas.add(item);
 
             cursor.moveToNext();
         }
 
         cursor.close();
-        return depesas;
+        return despesas;
     }
 }
