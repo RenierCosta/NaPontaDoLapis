@@ -55,13 +55,6 @@ public class DespesaCadastroListActivity extends ListActivity implements OnItemC
         String mensagem = "Despesa selecionada: "+ destino;
         Toast.makeText(this, mensagem, Toast.LENGTH_SHORT).show();
         startActivity(new Intent(this, DespesaEdicaoActivity.class));
-
-
-        /*TextView textView = (TextView) view;
-        String mensagem = "Despesa selecionada: " + textView.getText();
-        Toast.makeText(getApplicationContext(), mensagem,
-                Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(this, DespesaEdicaoActivity.class));*/
     }
 
     private List<Map<String, Object>> listarDespesas() {
