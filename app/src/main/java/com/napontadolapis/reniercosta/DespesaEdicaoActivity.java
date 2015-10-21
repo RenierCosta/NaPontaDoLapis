@@ -2,6 +2,7 @@ package com.napontadolapis.reniercosta;
 
 import android.app.Activity;
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class DespesaEdicaoActivity extends Activity {
 
@@ -21,6 +23,7 @@ public class DespesaEdicaoActivity extends Activity {
     private EditText edtValor;
     private Spinner spnCategoria;
     private Spinner spnStatus;
+    private String idDespesa;
 
     private void CarregarComponentesDaTela() {
         edtDescricao = (EditText) findViewById(R.id.edtDescricaoDespesa);
@@ -35,8 +38,32 @@ public class DespesaEdicaoActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_despesa_edicao);
         CarregarComponentesDaTela();
-
         helper = new DatabaseHelper(this);
+
+        idDespesa = getIntent().getStringExtra(Constantes.DESPESA_ID);
+
+        if (idDespesa != null)
+            CarregarDespesaAtual();
+
+    }
+
+    private void CarregarDespesaAtual() {
+        SQLiteDatabase db = helper.getReadableDatabase();
+        Cursor cursor =
+                db.rawQuery("SELECT descricao, vencimento, " +
+                        "valor, status, categoria_id " +
+                        "FROM despesas WHERE _id = ?", new String[]{ idDespesa });
+
+        cursor.moveToFirst();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+
+        edtDescricao.setText(cursor.getString(cursor.getColumnIndex("descricao")));
+        Date vencimento = new Date(cursor.getLong(cursor.getColumnIndex("vencimento")));
+        edtDataVencimento.setText(dateFormat.format(vencimento));
+        edtValor.setText(cursor.getString(cursor.getColumnIndex("valor")));
+
+        cursor.close();
     }
 
     @Override

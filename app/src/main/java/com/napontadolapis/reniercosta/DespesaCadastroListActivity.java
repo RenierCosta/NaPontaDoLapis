@@ -50,11 +50,27 @@ public class DespesaCadastroListActivity extends ListActivity implements OnItemC
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
         Map<String, Object> map = despesas.get(position);
-        String destino = (String) map.get("descricao");
-        String mensagem = "Despesa selecionada: "+ destino;
-        Toast.makeText(this, mensagem, Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(this, DespesaEdicaoActivity.class));
+        String idDespesa = (String) map.get("id");
+
+        if (idDespesa != null)
+            EditarDespesa(idDespesa);
+        else
+            CadastrarDespesa();
+    }
+
+    private void CadastrarDespesa(){
+        Intent intent;
+        intent = new Intent(this, DespesaEdicaoActivity.class);
+        startActivity(intent);
+    }
+
+    private void EditarDespesa(String pIdDespesa){
+        Intent intent;
+        intent = new Intent(this, DespesaEdicaoActivity.class);
+        intent.putExtra(Constantes.DESPESA_ID, pIdDespesa);
+        startActivity(intent);
     }
 
     private List<Map<String, Object>> listarDespesas() {
