@@ -127,8 +127,15 @@ public class DespesaEdicaoActivity extends Activity {
         values.put("status", "Pendente");
         values.put("categoria_id", 1);
 
+        long resultado;
 
-        long resultado = db.insert("despesas", null, values);
+        if(idDespesa == null) {
+            resultado = db.insert("despesas", null, values);
+        }
+        else {
+            resultado = db.update("despesas", values, "_id = ?", new String[]{idDespesa});
+        }
+
 
         if(resultado != -1 ){
             Toast.makeText(this, getString(R.string.registro_salvo),
