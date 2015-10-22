@@ -1,8 +1,10 @@
 <resources>
-    <string name="app_name">NaPontaDoLapis</string>
+    <string name="app_name">Na ponta do lapís</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="registro_salvo">Registro salvo com sucesso.</string>
     <string name="erro_salvar">Erro ao salvar o registro.</string>
+    <string name="categorias">Categorias</string>
+    <string name="status">Status</string>
 </resources>

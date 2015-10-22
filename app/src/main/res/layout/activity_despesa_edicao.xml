@@ -9,13 +9,26 @@
         android:id="@+id/edtDescricaoDespesa"
         android:hint="Descrição(Conta de luz, cartão, etc)" />
 
-    <EditText
+    <TableRow
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="date"
-        android:ems="10"
-        android:id="@+id/edtVencimentoDespesa"
-        android:hint="Vencimento(Somente números)" />
+        android:layout_gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Vencimento"
+            android:id="@+id/lblVencimentoDespesa" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="01/01/2015"
+            android:onClick="onClickVencimentoDespesa"
+            android:id="@+id/btnVencimentoDespesa" />
+
+    </TableRow>
 
     <Spinner
         android:layout_width="match_parent"
@@ -23,13 +36,15 @@
         android:id="@+id/spnCategoriaDespesa"
         android:focusable="false"
         android:clickable="false"
-        android:spinnerMode="dropdown" />
+        android:spinnerMode="dropdown"
+        android:prompt="@string/categorias" />
 
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/spnStatusDespesa"
-        android:spinnerMode="dropdown" />
+        android:spinnerMode="dropdown"
+        android:prompt="@string/status" />
 
     <EditText
         android:layout_width="match_parent"
