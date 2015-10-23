@@ -15,6 +15,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -36,8 +37,8 @@ public class DespesaCadastroListActivity extends ListActivity implements OnItemC
         helper = new DatabaseHelper(this);
         dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
-        String[] de = { "descricao","vencimento" };
-        int[] para = { R.id.lblDescricaoDespesaCadastro, R.id.lblVencimentoDespesaCadastro};
+        String[] de = { "VisualizacaoDaDescricao","VisualizacaoDoVencimento", "VisualizacaoDoValor" };
+        int[] para = { R.id.lblDescricaoDespesaCadastro, R.id.lblVencimentoDespesaCadastro, R.id.lblValorDepesaCadastro};
 
         SimpleAdapter adapter = new SimpleAdapter(this,
                 listarDespesas(), R.layout.activity_despesa_cadastro, de, para);
@@ -98,6 +99,9 @@ public class DespesaCadastroListActivity extends ListActivity implements OnItemC
             item.put("id", id);
             item.put("descricao", descricao);
             item.put("vencimento", dateFormat.format(vencimentoDate));
+            item.put("VisualizacaoDoVencimento", "Vencimento: " + dateFormat.format(vencimentoDate));
+            item.put("VisualizacaoDaDescricao", descricao);
+            item.put("VisualizacaoDoValor", "Valor: R" + NumberFormat.getCurrencyInstance().format(valor));
             item.put("valor", valor);
             item.put("status", status);
             item.put("categoria_id", categoria_Id);

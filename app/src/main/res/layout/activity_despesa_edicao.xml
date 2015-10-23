@@ -53,7 +53,7 @@
         android:ems="10"
         android:id="@+id/edtValorDespesa"
         android:layout_gravity="center_horizontal"
-        android:hint="Valor(Somente números)" />
+        android:hint="Valor" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -73,6 +73,7 @@
             android:layout_height="wrap_content"
             android:text="Cancelar"
             android:id="@+id/btnCancelarDespesa"
+            android:onClick="onClickCancelarDespesa"
             android:layout_weight=".5" />
     </LinearLayout>
 
@@ -87,6 +88,7 @@
             android:layout_height="wrap_content"
             android:text="Apagar"
             android:id="@+id/btnApagarDespesa"
+            android:onClick="onClickApagarDespesa"
             android:layout_gravity="center_horizontal" />
     </LinearLayout>
 

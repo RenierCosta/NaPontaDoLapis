@@ -32,9 +32,11 @@ public class DespesaEdicaoActivity extends Activity {
     private int ano, mes, dia;
     private Button btndataVencimento;
     private Date dataVencimento;
+    private Button btnApagarDespesa;
 
     private void CarregarComponentesDaTela() {
         edtDescricao = (EditText) findViewById(R.id.edtDescricaoDespesa);
+        btnApagarDespesa = (Button) findViewById(R.id.btnApagarDespesa);
 
         Calendar calendar = Calendar.getInstance();
         ano = calendar.get(Calendar.YEAR);
@@ -50,6 +52,29 @@ public class DespesaEdicaoActivity extends Activity {
 
     public void onClickVencimentoDespesa(View view) {
         showDialog(view.getId());
+    }
+
+    public void onClickCancelarDespesa(View view){
+        finish();
+    }
+
+    public void onClickApagarDespesa(View view){
+        apagarDespesa(idDespesa);
+        finish();
+    }
+
+    private void apagarDespesa(String idDespesa) {
+        SQLiteDatabase db = helper.getWritableDatabase();
+
+        long resultado = db.delete("despesas", "_id = ?", new String[] {idDespesa});
+
+        if (resultado != -1){
+            Toast.makeText(this, getString(R.string.registro_apagado),
+                    Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(this, getString(R.string.erro_apagado),
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -86,8 +111,10 @@ public class DespesaEdicaoActivity extends Activity {
 
         idDespesa = getIntent().getStringExtra(Constantes.DESPESA_ID);
 
-        if (idDespesa != null)
+        if (idDespesa != null) {
+
             CarregarDespesaAtual();
+        }
 
     }
 
