@@ -1,10 +1,14 @@
 package com.napontadolapis.reniercosta;
 
+import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -24,15 +28,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class DespesaCadastroListActivity extends ListActivity implements OnItemClickListener {
+public class DespesaCadastroListActivity extends Activity {
 
     private DatabaseHelper helper;
     private SimpleDateFormat dateFormat;
     private ArrayList<Map<String, Object>> despesas;
+    private ListView listViewDespesasCadastro;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_despesa_cadastro);
 
         helper = new DatabaseHelper(this);
         dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -41,24 +48,26 @@ public class DespesaCadastroListActivity extends ListActivity implements OnItemC
         int[] para = { R.id.lblDescricaoDespesaCadastro, R.id.lblVencimentoDespesaCadastro, R.id.lblValorDepesaCadastro};
 
         SimpleAdapter adapter = new SimpleAdapter(this,
-                listarDespesas(), R.layout.activity_despesa_cadastro, de, para);
+                listarDespesas(), R.layout.lista_de_despesas, de, para);
 
-        setListAdapter(adapter);
+        listViewDespesasCadastro = (ListView) findViewById(R.id.listaDespesasCadastro);
+        listViewDespesasCadastro.setAdapter(adapter);
+        listViewDespesasCadastro.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Map<String, Object> map = despesas.get(position);
+                String idDespesa = (String) map.get("id");
 
-        ListView listView = getListView();
-        listView.setOnItemClickListener(this);
+                if (idDespesa != null)
+                    EditarDespesa(idDespesa);
+                else
+                    CadastrarDespesa();
+            }
+        });
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-        Map<String, Object> map = despesas.get(position);
-        String idDespesa = (String) map.get("id");
-
-        if (idDespesa != null)
-            EditarDespesa(idDespesa);
-        else
-            CadastrarDespesa();
+    public void onClickbtnNovaDespesaCadastro(View view){
+        CadastrarDespesa();
     }
 
     private void CadastrarDespesa(){
