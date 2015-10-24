@@ -9,6 +9,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String BANCO_DADOS = "NaPontaDoLapis";
     private static int VERSAO = 1;
 
+    public static class Despesa {
+        public static final String TABELA = "despesas";
+        public static final String _ID = "_id";
+        public static final String DESCRICAO = "descricao";
+        public static final String VENCIMENTO = "vencimento";
+        public static final String VALOR = "valor";
+        public static final String STATUS = "status";
+        public static final String CATEGORIA_ID = "categoria_id";
+
+        public static final String[] COLUNAS = new String[]{
+                _ID, DESCRICAO, VENCIMENTO, VALOR,
+                STATUS, CATEGORIA_ID };
+    }
+
+    public static class Categoria{
+        public static final String TABELA = "categorias";
+        public static final String _ID = "_id";
+        public static final String DESCRICAO = "descricao";
+        public static final String TIPO = "tipo";
+
+        public static final String[] COLUNAS = new String[]{
+            _ID, DESCRICAO, TIPO };
+    }
+
     public DatabaseHelper(Context context) {
         super(context, BANCO_DADOS, null, VERSAO);
     }
