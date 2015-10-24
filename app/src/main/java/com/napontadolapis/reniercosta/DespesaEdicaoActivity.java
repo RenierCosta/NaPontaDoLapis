@@ -71,6 +71,7 @@ public class DespesaEdicaoActivity extends Activity {
         if (resultado != -1){
             Toast.makeText(this, getString(R.string.registro_apagado),
                     Toast.LENGTH_SHORT).show();
+            setResult(RESULT_OK);
         }else{
             Toast.makeText(this, getString(R.string.erro_apagado),
                     Toast.LENGTH_SHORT).show();
@@ -105,6 +106,10 @@ public class DespesaEdicaoActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //sempre inicializo assim
+        setResult(RESULT_CANCELED);
+
         setContentView(R.layout.activity_despesa_edicao);
         CarregarComponentesDaTela();
         helper = new DatabaseHelper(this);
@@ -144,12 +149,13 @@ public class DespesaEdicaoActivity extends Activity {
 
     public void btnGravarDespesaOnClik(View view) throws ParseException {
         SQLiteDatabase db = helper.getWritableDatabase();
-        Date vencimento = new Date(btndataVencimento.getText().toString());
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Date vencimento = sdf.parse(btndataVencimento.getText().toString());
 
 
         ContentValues values = new ContentValues();
         values.put("descricao", edtDescricao.getText().toString());
-        values.put("vencimento", dataVencimento.getTime());
+        values.put("vencimento", vencimento.getTime());
         values.put("valor", edtValor.getText().toString());
         values.put("status", "Pendente");
         values.put("categoria_id", 1);
@@ -167,6 +173,7 @@ public class DespesaEdicaoActivity extends Activity {
         if(resultado != -1 ){
             Toast.makeText(this, getString(R.string.registro_salvo),
                     Toast.LENGTH_SHORT).show();
+            setResult(RESULT_OK);
         }else{
             Toast.makeText(this, getString(R.string.erro_salvar),
                     Toast.LENGTH_SHORT).show();

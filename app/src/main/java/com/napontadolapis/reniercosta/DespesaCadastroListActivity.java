@@ -38,12 +38,39 @@ public class DespesaCadastroListActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_despesa_cadastro);
-
         helper = new DatabaseHelper(this);
         dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        CarregarListaDeDespesas();
+    }
 
+    public void onClickbtnNovaDespesaCadastro(View view){
+        CadastrarDespesa();
+    }
+
+    private void CadastrarDespesa(){
+        Intent intent;
+        intent = new Intent(this, DespesaEdicaoActivity.class);
+        //startActivity(intent);
+        startActivityForResult(intent, Constantes.RESULTADO_GRAVOU_INFORMACAO);
+    }
+
+    private void EditarDespesa(String pIdDespesa){
+        Intent intent;
+        intent = new Intent(this, DespesaEdicaoActivity.class);
+        intent.putExtra(Constantes.DESPESA_ID, pIdDespesa);
+        //startActivity(intent);
+        startActivityForResult(intent, Constantes.RESULTADO_GRAVOU_INFORMACAO);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK){
+            CarregarListaDeDespesas();
+        }
+    }
+
+    private void CarregarListaDeDespesas() {
         String[] de = { "VisualizacaoDaDescricao","VisualizacaoDoVencimento", "VisualizacaoDoValor" };
         int[] para = { R.id.lblDescricaoDespesaCadastro, R.id.lblVencimentoDespesaCadastro, R.id.lblValorDepesaCadastro};
 
@@ -64,23 +91,7 @@ public class DespesaCadastroListActivity extends Activity {
                     CadastrarDespesa();
             }
         });
-    }
 
-    public void onClickbtnNovaDespesaCadastro(View view){
-        CadastrarDespesa();
-    }
-
-    private void CadastrarDespesa(){
-        Intent intent;
-        intent = new Intent(this, DespesaEdicaoActivity.class);
-        startActivity(intent);
-    }
-
-    private void EditarDespesa(String pIdDespesa){
-        Intent intent;
-        intent = new Intent(this, DespesaEdicaoActivity.class);
-        intent.putExtra(Constantes.DESPESA_ID, pIdDespesa);
-        startActivity(intent);
     }
 
     private List<Map<String, Object>> listarDespesas() {
