@@ -10,6 +10,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
 import com.napontadolapis.reniercosta.R;
+import com.napontadolapis.reniercosta.dao.DatabaseHelper;
 import com.napontadolapis.reniercosta.dao.DespesaDAO;
 import com.napontadolapis.reniercosta.model.Constantes;
 import com.napontadolapis.reniercosta.model.Despesa;
@@ -22,7 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class DespesaCadastroListActivity extends Activity {
+public class DespesaCadastroActivity extends Activity {
 
     private SimpleDateFormat dateFormat;
     private List<Map<String, Object>>  despesas;
@@ -75,7 +76,7 @@ public class DespesaCadastroListActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Map<String, Object> map = despesas.get(position);
-                String idDespesa = (String) map.get("id");
+                String idDespesa = (String) map.get(DatabaseHelper.Despesa._ID);
 
                 if (idDespesa != null)
                     EditarDespesa(idDespesa);
@@ -100,15 +101,15 @@ public class DespesaCadastroListActivity extends Activity {
             long categoria_Id = despesa.getCategoria().getId();
             double valor = despesa.getValor();
 
-            item.put("id", id);
-            item.put("descricao", descricao);
-            item.put("vencimento", dateFormat.format(vencimento));
+            item.put(DatabaseHelper.Despesa._ID, id);
+            item.put(DatabaseHelper.Despesa.DESCRICAO, descricao);
+            item.put(DatabaseHelper.Despesa.VENCIMENTO, dateFormat.format(vencimento));
             item.put("VisualizacaoDoVencimento", "Vencimento: " + dateFormat.format(vencimento));
             item.put("VisualizacaoDaDescricao", descricao);
             item.put("VisualizacaoDoValor", "Valor: R" + NumberFormat.getCurrencyInstance().format(valor));
-            item.put("valor", valor);
-            item.put("status", status);
-            item.put("categoria_id", categoria_Id);
+            item.put(DatabaseHelper.Despesa.VALOR, valor);
+            item.put(DatabaseHelper.Despesa.STATUS, status);
+            item.put(DatabaseHelper.Despesa.CATEGORIA_ID, categoria_Id);
             despesas.add(item);
         }
         return despesas;

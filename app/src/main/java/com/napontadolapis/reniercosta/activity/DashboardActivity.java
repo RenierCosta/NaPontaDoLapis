@@ -16,7 +16,7 @@ public class DashboardActivity extends Activity {
     private Button FbtnDespesas;
 
     public void despesasOnClick(View v){
-        startActivity(new Intent(DashboardActivity.this, DespesaCadastroListActivity.class));
+        startActivity(new Intent(DashboardActivity.this, DespesaCadastroActivity.class));
     }
 
     @Override

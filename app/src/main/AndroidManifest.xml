@@ -16,7 +16,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.DespesaCadastroListActivity"
+            android:name=".activity.DespesaCadastroActivity"
             android:label="Despesas cadastro" >
         </activity>
         <activity
