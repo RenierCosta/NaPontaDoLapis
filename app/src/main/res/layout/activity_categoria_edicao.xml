@@ -25,13 +25,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Despesa"
-            android:id="@+id/rdbTipoDespesaCategoria"
-            android:checked="true" />
+            android:onClick="onClickRadioButton"
+            android:id="@+id/rdbTipoDespesaCategoria"/>
+
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Receita"
+            android:onClick="onClickRadioButton"
             android:id="@+id/rdbTipoReceitaCategoria" />
 
     </LinearLayout>

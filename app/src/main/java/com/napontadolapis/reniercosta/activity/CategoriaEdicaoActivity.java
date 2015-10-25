@@ -40,6 +40,7 @@ public class CategoriaEdicaoActivity extends Activity {
             carregarDespesaAtual();
         }else
             btnApagarCategoria.setEnabled(false);
+            rdbTipoDespesa.setChecked(true);
     }
 
     @Override
@@ -122,6 +123,25 @@ public class CategoriaEdicaoActivity extends Activity {
         }else{
             Toast.makeText(this, getString(R.string.erro_salvar),
                     Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void onClickRadioButton(View v){
+        boolean checked = ((RadioButton)v).isChecked();
+
+        switch (v.getId()){
+            case R.id.rdbTipoDespesaCategoria:
+                if(checked){
+                    rdbTipoReceita.setChecked(false);
+                }
+
+                break;
+            case R.id.rdbTipoReceitaCategoria:
+                if(checked){
+                    rdbTipoDespesa.setChecked(false);
+                }
+                break;
+
         }
     }
 }
