@@ -42,7 +42,7 @@ public class CategoriaCadastroActivity extends Activity{
         int[] para = { R.id.lblDescricaoCategoriaCadastro, R.id.lblTipoCategoriaCadastro};
 
         SimpleAdapter adapter = new SimpleAdapter(this,
-                listarCategorias(), R.layout.lista_de_despesas, de, para);
+                listarCategorias(), R.layout.lista_de_categorias, de, para);
 
         listViewCategoriasCadastro = (ListView) findViewById(R.id.listaCategoriaCadastro);
         listViewCategoriasCadastro.setAdapter(adapter);

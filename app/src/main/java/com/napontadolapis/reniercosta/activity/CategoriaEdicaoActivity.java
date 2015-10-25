@@ -4,14 +4,18 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.view.Menu;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 import com.napontadolapis.reniercosta.R;
 import com.napontadolapis.reniercosta.dao.CategoriaDAO;
 import com.napontadolapis.reniercosta.model.Categoria;
 import com.napontadolapis.reniercosta.model.Constantes;
+
+import java.text.ParseException;
 
 public class CategoriaEdicaoActivity extends Activity {
 
@@ -60,6 +64,64 @@ public class CategoriaEdicaoActivity extends Activity {
             rdbTipoDespesa.setChecked(true);
         }else{
             rdbTipoReceita.setChecked(true);
+        }
+    }
+
+    public void onClickCancelarCategoria(View view){
+        finish();
+    }
+
+    public void onClickApagarCategoria(View view){
+        apagarDespesa(idCategoria);
+        finish();
+    }
+
+    private void apagarDespesa(String idDespesa) {
+        boolean resultado = categoriaDAO.remover(Long.valueOf(idDespesa));
+
+        if (resultado){
+            Toast.makeText(this, getString(R.string.registro_apagado),
+                    Toast.LENGTH_SHORT).show();
+            setResult(RESULT_OK);
+        }else{
+            Toast.makeText(this, getString(R.string.erro_apagado),
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void btnGravarDespesaOnClik(View view) throws ParseException {
+        salvarAlteracoes();
+        this.finish();
+    }
+
+    private void salvarAlteracoes() throws ParseException {
+        Categoria categoria = new Categoria();
+        categoria.setDescricao(edtDescricao.getText().toString());
+
+        if (rdbTipoReceita.isChecked()){
+            categoria.setTipo(Constantes.ID_TIPO_CATEGORIA_RECEITA);
+        }else{
+            categoria.setTipo(Constantes.ID_TIPO_CATEGORIA_DESPESA);
+        }
+
+
+        boolean resultado;
+
+        if(idCategoria == null) {
+            resultado = categoriaDAO.inserir(categoria);
+        }
+        else {
+            categoria.setId(Long.valueOf(idCategoria));
+            resultado = categoriaDAO.atualizar(categoria);
+        }
+
+        if(resultado){
+            Toast.makeText(this, getString(R.string.registro_salvo),
+                    Toast.LENGTH_SHORT).show();
+            setResult(RESULT_OK);
+        }else{
+            Toast.makeText(this, getString(R.string.erro_salvar),
+                    Toast.LENGTH_SHORT).show();
         }
     }
 }

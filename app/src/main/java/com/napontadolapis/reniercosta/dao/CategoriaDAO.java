@@ -24,8 +24,12 @@ public class CategoriaDAO extends ClasseBaseDAO {
     }
 
     public boolean remover(Categoria categoria){
+        return remover(categoria.getId());
+    }
+
+    public boolean remover(Long idCategoria){
         String whereClause = DatabaseHelper.Categoria._ID + " = ?";
-        String[] whereArgs = new String[]{categoria.getId().toString()};
+        String[] whereArgs = new String[]{idCategoria.toString()};
         int removidos = getDb().delete(DatabaseHelper.Categoria.TABELA,
                 whereClause, whereArgs);
         return removidos > 0;

@@ -166,6 +166,7 @@ public class DespesaEdicaoActivity extends Activity {
             resultado = despesaDAO.inserir(despesa);
         }
         else {
+            despesa.setId(Long.valueOf(idDespesa));
             resultado = despesaDAO.atualizar(despesa);
         }
 

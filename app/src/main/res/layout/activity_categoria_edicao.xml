@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/edtDescricaoCategoria"
-        android:hint="Descrição(Cartão, Salário, Empréstimo, etc)" />
+        android:hint="Descrição(Cartão, Salário, etc)" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -45,6 +45,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Gravar"
+            android:onClick="btnGravarDespesaOnClik"
             android:id="@+id/btnGravarCategoria"
             android:layout_weight=".5" />
 
@@ -53,6 +54,7 @@
             android:layout_height="wrap_content"
             android:text="Cancelar"
             android:id="@+id/btnCancelarCategoria"
+            android:onClick="onClickCancelarCategoria"
             android:layout_weight=".5" />
     </LinearLayout>
 
@@ -60,6 +62,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Apagar"
+        android:onClick="onClickApagarCategoria"
         android:id="@+id/btnApagarCategoria" />
 
 </LinearLayout>
