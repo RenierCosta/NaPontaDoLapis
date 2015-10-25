@@ -108,7 +108,7 @@ public class DespesaEdicaoActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        DespesaDAO despesaDAO = new DespesaDAO(this);
+        despesaDAO = new DespesaDAO(this);
 
         //sempre inicializo assim
         setResult(RESULT_CANCELED);
@@ -120,6 +120,8 @@ public class DespesaEdicaoActivity extends Activity {
 
         if (idDespesa != null) {
             CarregarDespesaAtual();
+        }else{
+            btnApagarDespesa.setEnabled(false);
         }
 
     }
