@@ -1,4 +1,4 @@
-package com.napontadolapis.reniercosta;
+package com.napontadolapis.reniercosta.model;
 
 /**
  * Created by Renier on 21/10/2015.

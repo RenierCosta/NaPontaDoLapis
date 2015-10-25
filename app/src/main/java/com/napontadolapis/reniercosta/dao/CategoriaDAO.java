@@ -3,16 +3,14 @@ package com.napontadolapis.reniercosta.dao;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.provider.ContactsContract;
 
 import com.napontadolapis.reniercosta.DatabaseHelper;
 import com.napontadolapis.reniercosta.model.Categoria;
-import com.napontadolapis.reniercosta.model.Despesa;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoriaDAO extends NaPontaDoLapisDAO {
+public class CategoriaDAO extends ClasseBaseDAO {
     public CategoriaDAO(Context context) {
         super(context);
     }

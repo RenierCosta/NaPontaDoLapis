@@ -5,11 +5,11 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.napontadolapis.reniercosta.DatabaseHelper;
 
-public class NaPontaDoLapisDAO {
+public class ClasseBaseDAO {
     private DatabaseHelper helper;
     private SQLiteDatabase db;
 
-    public NaPontaDoLapisDAO(Context context){
+    public ClasseBaseDAO(Context context){
         helper = new DatabaseHelper(context);
     }
 

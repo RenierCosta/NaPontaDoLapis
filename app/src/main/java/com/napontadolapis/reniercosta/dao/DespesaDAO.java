@@ -3,18 +3,16 @@ package com.napontadolapis.reniercosta.dao;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.widget.ListView;
 
 import com.napontadolapis.reniercosta.DatabaseHelper;
 import com.napontadolapis.reniercosta.model.Categoria;
-import com.napontadolapis.reniercosta.model.Despesa;
 import com.napontadolapis.reniercosta.model.Despesa;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class DespesaDAO extends NaPontaDoLapisDAO {
+public class DespesaDAO extends ClasseBaseDAO {
 
   private CategoriaDAO categoriaDAO;
 
