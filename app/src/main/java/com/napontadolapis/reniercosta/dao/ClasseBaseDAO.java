@@ -3,8 +3,6 @@ package com.napontadolapis.reniercosta.dao;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.napontadolapis.reniercosta.DatabaseHelper;
-
 public class ClasseBaseDAO {
     private DatabaseHelper helper;
     private SQLiteDatabase db;

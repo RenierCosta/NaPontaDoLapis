@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 
-import com.napontadolapis.reniercosta.DatabaseHelper;
 import com.napontadolapis.reniercosta.model.Categoria;
 import com.napontadolapis.reniercosta.model.Despesa;
 

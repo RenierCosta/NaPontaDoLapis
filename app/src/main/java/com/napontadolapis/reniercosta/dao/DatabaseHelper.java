@@ -1,4 +1,4 @@
-package com.napontadolapis.reniercosta;
+package com.napontadolapis.reniercosta.dao;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

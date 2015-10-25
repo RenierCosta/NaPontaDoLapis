@@ -1,4 +1,4 @@
-package com.napontadolapis.reniercosta;
+package com.napontadolapis.reniercosta.activity;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.napontadolapis.reniercosta.R;
 import com.napontadolapis.reniercosta.dao.CategoriaDAO;
 import com.napontadolapis.reniercosta.dao.DespesaDAO;
 import com.napontadolapis.reniercosta.model.Categoria;

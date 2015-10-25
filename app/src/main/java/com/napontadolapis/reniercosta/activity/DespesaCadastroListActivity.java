@@ -1,4 +1,4 @@
-package com.napontadolapis.reniercosta;
+package com.napontadolapis.reniercosta.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,6 +9,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
+import com.napontadolapis.reniercosta.R;
 import com.napontadolapis.reniercosta.dao.DespesaDAO;
 import com.napontadolapis.reniercosta.model.Constantes;
 import com.napontadolapis.reniercosta.model.Despesa;
