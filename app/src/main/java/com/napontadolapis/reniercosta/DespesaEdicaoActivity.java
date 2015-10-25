@@ -14,6 +14,11 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.napontadolapis.reniercosta.dao.CategoriaDAO;
+import com.napontadolapis.reniercosta.dao.DespesaDAO;
+import com.napontadolapis.reniercosta.model.Categoria;
+import com.napontadolapis.reniercosta.model.Despesa;
+
 import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -22,7 +27,6 @@ import java.util.Date;
 
 public class DespesaEdicaoActivity extends Activity {
 
-    private DatabaseHelper helper;
     private EditText edtDescricao;
     private EditText edtValor;
     private Spinner spnCategoria;
@@ -33,6 +37,7 @@ public class DespesaEdicaoActivity extends Activity {
     private Button btndataVencimento;
     private Date dataVencimento;
     private Button btnApagarDespesa;
+    private DespesaDAO despesaDAO;
 
     private void CarregarComponentesDaTela() {
         edtDescricao = (EditText) findViewById(R.id.edtDescricaoDespesa);
@@ -64,11 +69,9 @@ public class DespesaEdicaoActivity extends Activity {
     }
 
     private void apagarDespesa(String idDespesa) {
-        SQLiteDatabase db = helper.getWritableDatabase();
+        boolean resultado = despesaDAO.remover(Long.valueOf(idDespesa));
 
-        long resultado = db.delete("despesas", "_id = ?", new String[] {idDespesa});
-
-        if (resultado != -1){
+        if (resultado){
             Toast.makeText(this, getString(R.string.registro_apagado),
                     Toast.LENGTH_SHORT).show();
             setResult(RESULT_OK);
@@ -107,70 +110,67 @@ public class DespesaEdicaoActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        DespesaDAO despesaDAO = new DespesaDAO(this);
+
         //sempre inicializo assim
         setResult(RESULT_CANCELED);
 
         setContentView(R.layout.activity_despesa_edicao);
         CarregarComponentesDaTela();
-        helper = new DatabaseHelper(this);
 
         idDespesa = getIntent().getStringExtra(Constantes.DESPESA_ID);
 
         if (idDespesa != null) {
-
             CarregarDespesaAtual();
         }
 
     }
 
     private void CarregarDespesaAtual() {
-        SQLiteDatabase db = helper.getReadableDatabase();
-        Cursor cursor =
-                db.rawQuery("SELECT descricao, vencimento, " +
-                        "valor, status, categoria_id " +
-                        "FROM despesas WHERE _id = ?", new String[]{ idDespesa });
+        Despesa despesa = despesaDAO.buscarDespesaPorId(Integer.valueOf(idDespesa));
 
-        cursor.moveToFirst();
-
-        edtDescricao.setText(cursor.getString(cursor.getColumnIndex("descricao")));
-        dataVencimento = new Date(cursor.getLong(cursor.getColumnIndex("vencimento")));
+        edtDescricao.setText(despesa.getDescricao());
+        dataVencimento = despesa.getVencimento();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         btndataVencimento.setText(dateFormat.format(dataVencimento));
-        edtValor.setText(cursor.getString(cursor.getColumnIndex("valor")));
-
-        cursor.close();
+        edtValor.setText(String.valueOf(despesa.getValor()));
     }
 
     @Override
     protected void onDestroy() {
-        helper.close();
+        despesaDAO.close();
         super.onDestroy();
     }
 
     public void btnGravarDespesaOnClik(View view) throws ParseException {
-        SQLiteDatabase db = helper.getWritableDatabase();
+        SalvarAlteracoes();
+        this.finish();
+    }
+
+    private void SalvarAlteracoes() throws ParseException{
+
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         Date vencimento = sdf.parse(btndataVencimento.getText().toString());
 
+        Despesa despesa = new Despesa();
+        Categoria categoria = obterCategoriaSelecionada();
 
-        ContentValues values = new ContentValues();
-        values.put("descricao", edtDescricao.getText().toString());
-        values.put("vencimento", vencimento.getTime());
-        values.put("valor", edtValor.getText().toString());
-        values.put("status", "Pendente");
-        values.put("categoria_id", 1);
+        despesa.setDescricao(edtDescricao.getText().toString());
+        despesa.setVencimento(vencimento);
+        despesa.setValor(Double.valueOf(edtValor.getText().toString()));
+        despesa.setStatus("Pendente");
+        despesa.setCategoria(categoria);
 
-        long resultado;
+        boolean resultado;
 
         if(idDespesa == null) {
-            resultado = db.insert("despesas", null, values);
+            resultado = despesaDAO.inserir(despesa);
         }
         else {
-            resultado = db.update("despesas", values, "_id = ?", new String[]{idDespesa});
+            resultado = despesaDAO.atualizar(despesa);
         }
 
-
-        if(resultado != -1 ){
+        if(resultado){
             Toast.makeText(this, getString(R.string.registro_salvo),
                     Toast.LENGTH_SHORT).show();
             setResult(RESULT_OK);
@@ -178,8 +178,11 @@ public class DespesaEdicaoActivity extends Activity {
             Toast.makeText(this, getString(R.string.erro_salvar),
                     Toast.LENGTH_SHORT).show();
         }
+    }
 
-        this.finish();
+    private Categoria obterCategoriaSelecionada() {
+        CategoriaDAO categoriaDAO = new CategoriaDAO(this);
+        return categoriaDAO.buscarCategoriaPorId(1);
     }
 
 

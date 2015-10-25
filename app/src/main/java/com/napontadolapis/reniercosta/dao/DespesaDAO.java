@@ -37,12 +37,16 @@ public class DespesaDAO extends NaPontaDoLapisDAO {
         return resultado != -1;
     }
 
-    public boolean remover(Despesa despesa){
+    public boolean remover(Long idDespesa){
         String whereClause = DatabaseHelper.Despesa._ID + " = ?";
-        String[] whereArgs = new String[]{despesa.getId().toString()};
+        String[] whereArgs = new String[]{idDespesa.toString()};
         int removidos = getDb().delete(DatabaseHelper.Despesa.TABELA,
                 whereClause, whereArgs);
         return removidos > 0;
+    }
+
+    public boolean remover(Despesa despesa){
+        return remover(despesa.getId());
     }
 
     public boolean atualizar(Despesa despesa){
