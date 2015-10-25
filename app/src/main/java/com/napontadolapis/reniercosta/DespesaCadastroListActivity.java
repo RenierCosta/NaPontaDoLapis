@@ -19,6 +19,9 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.napontadolapis.reniercosta.dao.DespesaDAO;
+import com.napontadolapis.reniercosta.model.Despesa;
+
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -30,16 +33,16 @@ import java.util.Map;
 
 public class DespesaCadastroListActivity extends Activity {
 
-    private DatabaseHelper helper;
     private SimpleDateFormat dateFormat;
-    private ArrayList<Map<String, Object>> despesas;
+    private List<Map<String, Object>>  despesas;
     private ListView listViewDespesasCadastro;
+    private DespesaDAO despesaDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_despesa_cadastro);
-        helper = new DatabaseHelper(this);
+        despesaDAO = new DespesaDAO(this);
         dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         CarregarListaDeDespesas();
     }
@@ -51,7 +54,6 @@ public class DespesaCadastroListActivity extends Activity {
     private void CadastrarDespesa(){
         Intent intent;
         intent = new Intent(this, DespesaEdicaoActivity.class);
-        //startActivity(intent);
         startActivityForResult(intent, Constantes.RESULTADO_GRAVOU_INFORMACAO);
     }
 
@@ -59,7 +61,6 @@ public class DespesaCadastroListActivity extends Activity {
         Intent intent;
         intent = new Intent(this, DespesaEdicaoActivity.class);
         intent.putExtra(Constantes.DESPESA_ID, pIdDespesa);
-        //startActivity(intent);
         startActivityForResult(intent, Constantes.RESULTADO_GRAVOU_INFORMACAO);
     }
 
@@ -95,42 +96,30 @@ public class DespesaCadastroListActivity extends Activity {
     }
 
     private List<Map<String, Object>> listarDespesas() {
-        SQLiteDatabase db = helper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT _id, descricao, vencimento, " +
-                        "valor, status, categoria_id FROM despesas",
-                null);
-
-        cursor.moveToFirst();
-
+        List<Despesa> listaDedespesas = despesaDAO.listarTodos();
         despesas = new ArrayList<Map<String, Object>>();
 
-        for (int i = 0; i < cursor.getCount(); i++) {
+        for (Despesa despesa : listaDedespesas){
             Map<String, Object> item = new HashMap<String, Object>();
 
-            String id = cursor.getString(cursor.getColumnIndex("_id"));
-            String descricao = cursor.getString(cursor.getColumnIndex("descricao"));
-            long vencimento = cursor.getLong(cursor.getColumnIndex("vencimento"));
-            String status = cursor.getString(cursor.getColumnIndex("status"));
-            int categoria_Id = cursor.getInt(cursor.getColumnIndex("categoria_id"));
-            double valor = cursor.getDouble(cursor.getColumnIndex("valor"));
-
-            Date vencimentoDate = new Date(vencimento);
+            String id = despesa.getId().toString();
+            String descricao = despesa.getDescricao();
+            Date vencimento = new Date(despesa.getVencimento().getTime());
+            String status = despesa.getStatus();
+            long categoria_Id = despesa.getCategoria().getId();
+            double valor = despesa.getValor();
 
             item.put("id", id);
             item.put("descricao", descricao);
-            item.put("vencimento", dateFormat.format(vencimentoDate));
-            item.put("VisualizacaoDoVencimento", "Vencimento: " + dateFormat.format(vencimentoDate));
+            item.put("vencimento", dateFormat.format(vencimento));
+            item.put("VisualizacaoDoVencimento", "Vencimento: " + dateFormat.format(vencimento));
             item.put("VisualizacaoDaDescricao", descricao);
             item.put("VisualizacaoDoValor", "Valor: R" + NumberFormat.getCurrencyInstance().format(valor));
             item.put("valor", valor);
             item.put("status", status);
             item.put("categoria_id", categoria_Id);
             despesas.add(item);
-
-            cursor.moveToNext();
         }
-
-        cursor.close();
         return despesas;
     }
 }

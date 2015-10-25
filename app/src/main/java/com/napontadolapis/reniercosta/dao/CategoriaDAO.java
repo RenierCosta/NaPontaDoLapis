@@ -60,12 +60,13 @@ public class CategoriaDAO extends NaPontaDoLapisDAO {
         return categorias;
     }
 
-    public Categoria buscarCategoriaPorId(Integer idCategoria){
+    public Categoria buscarCategoriaPorId(Long idCategoria){
+        String whereClause = DatabaseHelper.Categoria._ID + " = ?";
+        String [] whereArgs = new String[]{idCategoria.toString()};
+
         Cursor cursor = getDb().query(DatabaseHelper.Categoria.TABELA,
-                DatabaseHelper.Categoria.COLUNAS,
-                DatabaseHelper.Categoria._ID + " = ?",
-                new String[]{ idCategoria.toString() },
-                null, null, null);
+                DatabaseHelper.Categoria.COLUNAS, whereClause, whereArgs, null, null, null);
+
         if(cursor.moveToNext()){
             Categoria categoria = criarCategoria(cursor);
             cursor.close();

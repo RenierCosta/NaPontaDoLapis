@@ -10,7 +10,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static int VERSAO = 1;
 
     public static class Despesa {
-        public static final String TABELA = "despesas";
+        public static final String TABELA = "despesa";
         public static final String _ID = "_id";
         public static final String DESCRICAO = "descricao";
         public static final String VENCIMENTO = "vencimento";
@@ -24,7 +24,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public static class Categoria{
-        public static final String TABELA = "categorias";
+        public static final String TABELA = "categoria";
         public static final String _ID = "_id";
         public static final String DESCRICAO = "descricao";
         public static final String TIPO = "tipo";
@@ -39,7 +39,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE despesas (_id INTEGER PRIMARY KEY," +
+        db.execSQL("CREATE TABLE despesa (_id INTEGER PRIMARY KEY," +
                 " descricao TEXT, vencimento DATE," +
                 " valor DOUBLE," +
                 " status TEXT," +

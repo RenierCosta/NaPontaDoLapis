@@ -78,7 +78,7 @@ public class DespesaDAO extends NaPontaDoLapisDAO {
         return despesas;
     }
 
-    public Despesa buscarDespesaPorId(Integer idDespesa){
+    public Despesa buscarDespesaPorId(Long idDespesa){
         Cursor cursor = getDb().query(DatabaseHelper.Despesa.TABELA,
                 DatabaseHelper.Despesa.COLUNAS,
                 DatabaseHelper.Despesa._ID + " = ?",
@@ -100,7 +100,7 @@ public class DespesaDAO extends NaPontaDoLapisDAO {
         Date vencimento = new Date(cursor.getLong(cursor.getColumnIndex(DatabaseHelper.Despesa.VENCIMENTO)));
         Double valor = cursor.getDouble((cursor.getColumnIndex(DatabaseHelper.Despesa.VALOR)));
         String status = cursor.getString(cursor.getColumnIndex(DatabaseHelper.Despesa.STATUS));
-        Categoria categoria = categoriaDAO.buscarCategoriaPorId(cursor.getColumnIndex(DatabaseHelper.Despesa.CATEGORIA_ID));
+        Categoria categoria = categoriaDAO.buscarCategoriaPorId(cursor.getLong(cursor.getColumnIndex(DatabaseHelper.Despesa.CATEGORIA_ID)));
 
         Despesa despesa = new Despesa(id, descricao, vencimento, valor, status, categoria);
         return despesa;

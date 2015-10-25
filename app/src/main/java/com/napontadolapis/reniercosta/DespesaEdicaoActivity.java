@@ -127,7 +127,7 @@ public class DespesaEdicaoActivity extends Activity {
     }
 
     private void CarregarDespesaAtual() {
-        Despesa despesa = despesaDAO.buscarDespesaPorId(Integer.valueOf(idDespesa));
+        Despesa despesa = despesaDAO.buscarDespesaPorId(Long.valueOf(idDespesa));
 
         edtDescricao.setText(despesa.getDescricao());
         dataVencimento = despesa.getVencimento();
@@ -143,12 +143,11 @@ public class DespesaEdicaoActivity extends Activity {
     }
 
     public void btnGravarDespesaOnClik(View view) throws ParseException {
-        SalvarAlteracoes();
+        salvarAlteracoes();
         this.finish();
     }
 
-    private void SalvarAlteracoes() throws ParseException{
-
+    private void salvarAlteracoes() throws ParseException{
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         Date vencimento = sdf.parse(btndataVencimento.getText().toString());
 
@@ -182,7 +181,7 @@ public class DespesaEdicaoActivity extends Activity {
 
     private Categoria obterCategoriaSelecionada() {
         CategoriaDAO categoriaDAO = new CategoriaDAO(this);
-        return categoriaDAO.buscarCategoriaPorId(1);
+        return categoriaDAO.buscarCategoriaPorId(Long.valueOf(1));
     }
 
 
