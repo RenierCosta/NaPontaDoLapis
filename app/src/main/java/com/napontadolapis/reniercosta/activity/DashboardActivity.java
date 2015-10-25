@@ -19,6 +19,10 @@ public class DashboardActivity extends Activity {
         startActivity(new Intent(DashboardActivity.this, DespesaCadastroActivity.class));
     }
 
+    public void categoriasOnClick(View v){
+        startActivity(new Intent(DashboardActivity.this, CategoriaCadastroActivity.class));
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

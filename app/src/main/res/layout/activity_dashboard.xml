@@ -41,6 +41,7 @@
             android:layout_height="wrap_content"
             android:text="Categorias"
             android:id="@+id/btnCategorias"
+            android:onClick="categoriasOnClick"
             android:layout_gravity="center_horizontal" />
 
         <Button
