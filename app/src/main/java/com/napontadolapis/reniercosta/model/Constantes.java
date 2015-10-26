@@ -12,4 +12,6 @@ public class Constantes {
     public static final int ID_TIPO_CATEGORIA_RECEITA = 1;
     public static final String DESCRICAO_TIPO_CATEGORIA_DESPESA = "Despesa";
     public static final String DESCRICAO_TIPO_CATEGORIA_RECEITA = "Receita";
+    public static final String STATUS_PENDENTE = "Pendente";
+    public static final String STATUS_PAGO = "Pago";
 }

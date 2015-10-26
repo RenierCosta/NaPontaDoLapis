@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -20,8 +21,10 @@ import com.napontadolapis.reniercosta.model.Despesa;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class DespesaEdicaoActivity extends Activity {
 
@@ -36,8 +39,56 @@ public class DespesaEdicaoActivity extends Activity {
     private Date dataVencimento;
     private Button btnApagarDespesa;
     private DespesaDAO despesaDAO;
+    private CategoriaDAO categoriaDAO;
 
-    private void CarregarComponentesDaTela() {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        despesaDAO = new DespesaDAO(this);
+        categoriaDAO = new CategoriaDAO(this);
+
+        //sempre inicializo assim
+        setResult(RESULT_CANCELED);
+
+        setContentView(R.layout.activity_despesa_edicao);
+        carregarComponentesDaTela();
+        carregarSpinnerCategoria();
+        carregarSpinnerStatus();
+
+        idDespesa = getIntent().getStringExtra(Constantes.DESPESA_ID);
+
+        if (idDespesa != null) {
+            CarregarDespesaAtual();
+        }else{
+            btnApagarDespesa.setEnabled(false);
+        }
+
+    }
+
+    private void carregarSpinnerStatus() {
+        List<String> status = new ArrayList<>();
+        status.add(Constantes.STATUS_PENDENTE);
+        status.add(Constantes.STATUS_PAGO);
+
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item,
+                status);
+
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnStatus.setAdapter(arrayAdapter);
+    }
+
+    private void carregarSpinnerCategoria() {
+        List<Categoria> categorias = categoriaDAO.listarTodos();
+        ArrayAdapter<Categoria> arrayAdapter = new ArrayAdapter<Categoria>(this,
+                android.R.layout.simple_spinner_item, categorias);
+
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spnCategoria.setAdapter(arrayAdapter);
+    }
+
+    private void carregarComponentesDaTela() {
         edtDescricao = (EditText) findViewById(R.id.edtDescricaoDespesa);
         btnApagarDespesa = (Button) findViewById(R.id.btnApagarDespesa);
 
@@ -104,28 +155,6 @@ public class DespesaEdicaoActivity extends Activity {
         return calendar.getTime();
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        despesaDAO = new DespesaDAO(this);
-
-        //sempre inicializo assim
-        setResult(RESULT_CANCELED);
-
-        setContentView(R.layout.activity_despesa_edicao);
-        CarregarComponentesDaTela();
-
-        idDespesa = getIntent().getStringExtra(Constantes.DESPESA_ID);
-
-        if (idDespesa != null) {
-            CarregarDespesaAtual();
-        }else{
-            btnApagarDespesa.setEnabled(false);
-        }
-
-    }
-
     private void CarregarDespesaAtual() {
         Despesa despesa = despesaDAO.buscarDespesaPorId(Long.valueOf(idDespesa));
 
@@ -181,7 +210,6 @@ public class DespesaEdicaoActivity extends Activity {
     }
 
     private Categoria obterCategoriaSelecionada() {
-        CategoriaDAO categoriaDAO = new CategoriaDAO(this);
         return categoriaDAO.buscarCategoriaPorId(Long.valueOf(1));
     }
 
