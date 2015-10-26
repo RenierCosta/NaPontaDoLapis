@@ -30,11 +30,25 @@
 
     </TableRow>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Categorias"
+        android:id="@+id/lblCategoriaDespesaEdicao" />
+
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/spnCategoriaDespesa"
         android:prompt="@string/categorias" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Status"
+        android:id="@+id/lblStatusDespesaEdicao" />
 
     <Spinner
         android:layout_width="match_parent"
