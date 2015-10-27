@@ -163,6 +163,36 @@ public class DespesaEdicaoActivity extends Activity {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         btndataVencimento.setText(dateFormat.format(dataVencimento));
         edtValor.setText(String.valueOf(despesa.getValor()));
+        Categoria categoria = despesa.getCategoria();
+
+        spnCategoria.setSelection(obterPosicaoDaCategoriaNoSpinner(categoria));
+        spnStatus.setSelection(obterPosicaoDoStatusNoSpinner(despesa.getStatus()));
+    }
+
+    private int obterPosicaoDoStatusNoSpinner(String status) {
+        int posicao = 0;
+
+        for (int i=0;i<spnStatus.getCount();i++){
+            if (spnStatus.getItemAtPosition(i).equals(status)){
+                posicao = i;
+            }
+        }
+
+        return posicao;
+    }
+
+    private int obterPosicaoDaCategoriaNoSpinner(Categoria categoria) {
+        int posicao = 0;
+        Categoria categoriaDoSpiiner;
+
+        for (int i=0;i<spnCategoria.getCount();i++){
+            categoriaDoSpiiner = (Categoria)spnCategoria.getItemAtPosition(i);
+            if (categoria.getId().equals(categoriaDoSpiiner.getId())){
+                posicao = i;
+            }
+        }
+
+        return posicao;
     }
 
     @Override
@@ -186,7 +216,7 @@ public class DespesaEdicaoActivity extends Activity {
         despesa.setDescricao(edtDescricao.getText().toString());
         despesa.setVencimento(vencimento);
         despesa.setValor(Double.valueOf(edtValor.getText().toString()));
-        despesa.setStatus("Pendente");
+        despesa.setStatus(obterStatusSelecionado());
         despesa.setCategoria(categoria);
 
         boolean resultado;
@@ -209,8 +239,12 @@ public class DespesaEdicaoActivity extends Activity {
         }
     }
 
+    private String obterStatusSelecionado() {
+        return spnStatus.getSelectedItem().toString();
+    }
+
     private Categoria obterCategoriaSelecionada() {
-        return categoriaDAO.buscarCategoriaPorId(Long.valueOf(1));
+        return (Categoria)spnCategoria.getSelectedItem();
     }
 
 
