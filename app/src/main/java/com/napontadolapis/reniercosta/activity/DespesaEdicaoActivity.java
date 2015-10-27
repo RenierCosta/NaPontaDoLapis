@@ -36,7 +36,9 @@ public class DespesaEdicaoActivity extends Activity {
     private SimpleDateFormat dateFormat;
     private int ano, mes, dia;
     private Button btndataVencimento;
+    private Button btndataDataDespesa;
     private Date dataVencimento;
+    private Date dataDataDespesa;
     private Button btnApagarDespesa;
     private DespesaDAO despesaDAO;
     private CategoriaDAO categoriaDAO;
@@ -97,7 +99,9 @@ public class DespesaEdicaoActivity extends Activity {
         mes = calendar.get(Calendar.MONTH);
         dia = calendar.get(Calendar.DAY_OF_MONTH);
         btndataVencimento = (Button) findViewById(R.id.btnVencimentoDespesa);
+        btndataDataDespesa = (Button) findViewById(R.id.btnDataDespesa);
         btndataVencimento.setText(dia + "/" + (mes + 1) + "/" + ano);
+        btndataDataDespesa.setText(dia + "/" + (mes + 1) + "/" + ano);
 
         edtValor = (EditText) findViewById(R.id.edtValorDespesa);
         spnCategoria = (Spinner) findViewById(R.id.spnCategoriaDespesa);
@@ -133,12 +137,15 @@ public class DespesaEdicaoActivity extends Activity {
     @Override
     protected Dialog onCreateDialog(int id) {
         if (R.id.btnVencimentoDespesa == id) {
-            return new DatePickerDialog(this, listener, ano, mes, dia);
+            return new DatePickerDialog(this, dataVencimentolistener, ano, mes, dia);
+        }else if(R.id.btnDataDespesa == id){
+            return new DatePickerDialog(this, dataDataDespesalistener, ano, mes, dia);
         }
+
         return null;
     }
 
-    private DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener() {
+    private DatePickerDialog.OnDateSetListener dataVencimentolistener = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
             ano = year;
@@ -146,6 +153,17 @@ public class DespesaEdicaoActivity extends Activity {
             dia = dayOfMonth;
             dataVencimento = criarData(ano, mes, dia);
             btndataVencimento.setText(dia + "/" + (mes + 1) + "/" + ano);
+        }
+    };
+
+    private DatePickerDialog.OnDateSetListener dataDataDespesalistener = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            ano = year;
+            mes = monthOfYear;
+            dia = dayOfMonth;
+            dataDataDespesa = criarData(ano, mes, dia);
+            btndataDataDespesa.setText(dia + "/" + (mes + 1) + "/" + ano);
         }
     };
 
@@ -160,8 +178,10 @@ public class DespesaEdicaoActivity extends Activity {
 
         edtDescricao.setText(despesa.getDescricao());
         dataVencimento = despesa.getVencimento();
+        dataDataDespesa = despesa.getData();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         btndataVencimento.setText(dateFormat.format(dataVencimento));
+        btndataDataDespesa.setText(dateFormat.format(dataDataDespesa));
         edtValor.setText(String.valueOf(despesa.getValor()));
         Categoria categoria = despesa.getCategoria();
 
@@ -210,6 +230,7 @@ public class DespesaEdicaoActivity extends Activity {
     private void salvarAlteracoes() throws ParseException{
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         Date vencimento = sdf.parse(btndataVencimento.getText().toString());
+        Date dataDespesa = sdf.parse(btndataDataDespesa.getText().toString());
 
         Despesa despesa = new Despesa();
         Categoria categoria = obterCategoriaSelecionada();
@@ -219,6 +240,7 @@ public class DespesaEdicaoActivity extends Activity {
         despesa.setValor(Double.valueOf(edtValor.getText().toString()));
         despesa.setStatus(obterStatusSelecionado());
         despesa.setCategoria(categoria);
+        despesa.setData(dataDespesa);
 
         boolean resultado;
 

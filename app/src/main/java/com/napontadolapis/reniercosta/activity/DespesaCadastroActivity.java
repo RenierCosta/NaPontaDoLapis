@@ -97,6 +97,7 @@ public class DespesaCadastroActivity extends Activity {
             String id = despesa.getId().toString();
             String descricao = despesa.getDescricao();
             Date vencimento = new Date(despesa.getVencimento().getTime());
+            Date dataDespesa = new Date(despesa.getData().getTime());
             String status = despesa.getStatus();
             long categoria_Id = despesa.getCategoria().getId();
             double valor = despesa.getValor();
@@ -110,6 +111,7 @@ public class DespesaCadastroActivity extends Activity {
             item.put(DatabaseHelper.Despesa.VALOR, valor);
             item.put(DatabaseHelper.Despesa.STATUS, status);
             item.put(DatabaseHelper.Despesa.CATEGORIA_ID, categoria_Id);
+            item.put(DatabaseHelper.Despesa.DATA, dataDespesa);
             despesas.add(item);
         }
         return despesas;

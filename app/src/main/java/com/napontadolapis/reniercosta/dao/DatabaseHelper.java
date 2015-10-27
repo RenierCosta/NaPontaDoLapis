@@ -17,10 +17,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         public static final String VALOR = "valor";
         public static final String STATUS = "status";
         public static final String CATEGORIA_ID = "categoria_id";
+        public static final String DATA = "data";
 
         public static final String[] COLUNAS = new String[]{
                 _ID, DESCRICAO, VENCIMENTO, VALOR,
-                STATUS, CATEGORIA_ID };
+                STATUS, CATEGORIA_ID, DATA };
     }
 
     public static class Categoria{
@@ -40,7 +41,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE despesa (_id INTEGER PRIMARY KEY," +
-                " descricao TEXT, vencimento DATE," +
+                " descricao TEXT, vencimento DATE, data DATE," +
                 " valor DOUBLE," +
                 " status TEXT," +
                 " categoria_id INTEGER);");

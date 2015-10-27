@@ -30,6 +30,7 @@ public class DespesaDAO extends ClasseBaseDAO {
         values.put(DatabaseHelper.Despesa.VALOR, despesa.getValor());
         values.put(DatabaseHelper.Despesa.STATUS, despesa.getStatus());
         values.put(DatabaseHelper.Despesa.CATEGORIA_ID, despesa.getCategoria().getId());
+        values.put(DatabaseHelper.Despesa.DATA, despesa.getData().getTime());
         resultado = getDb().insert(DatabaseHelper.Despesa.TABELA, null, values);
         return resultado != -1;
     }
@@ -57,6 +58,7 @@ public class DespesaDAO extends ClasseBaseDAO {
         values.put(DatabaseHelper.Despesa.VALOR, despesa.getValor());
         values.put(DatabaseHelper.Despesa.STATUS, despesa.getStatus());
         values.put(DatabaseHelper.Despesa.CATEGORIA_ID, despesa.getCategoria().getId());
+        values.put(DatabaseHelper.Despesa.DATA, despesa.getData().getTime());
         resultado = getDb().update(DatabaseHelper.Despesa.TABELA, values, whereClause, whereArgs);
         return resultado != -1;
     }
@@ -98,8 +100,9 @@ public class DespesaDAO extends ClasseBaseDAO {
         Double valor = cursor.getDouble((cursor.getColumnIndex(DatabaseHelper.Despesa.VALOR)));
         String status = cursor.getString(cursor.getColumnIndex(DatabaseHelper.Despesa.STATUS));
         Categoria categoria = categoriaDAO.buscarCategoriaPorId(cursor.getLong(cursor.getColumnIndex(DatabaseHelper.Despesa.CATEGORIA_ID)));
+        Date data = new Date(cursor.getLong(cursor.getColumnIndex(DatabaseHelper.Despesa.DATA)));
 
-        Despesa despesa = new Despesa(id, descricao, vencimento, valor, status, categoria);
+        Despesa despesa = new Despesa(id, descricao, vencimento, valor, status, categoria, data);
         return despesa;
     }
 

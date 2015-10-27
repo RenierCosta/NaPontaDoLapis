@@ -6,6 +6,16 @@ public class Despesa {
     Long id;
     String descricao;
     Date vencimento;
+    Date data;
+
+    public Date getData() {
+        return data;
+    }
+
+    public void setData(Date data) {
+        this.data = data;
+    }
+
     Double valor;
     String status;
     Categoria categoria;
@@ -13,7 +23,7 @@ public class Despesa {
     public Despesa(){};
 
     public Despesa(Long id, String descricao, Date vencimento, Double valor, String status,
-                   Categoria categoria){
+                   Categoria categoria, Date data){
 
         this.id = id;
         this.descricao = descricao;
@@ -21,6 +31,7 @@ public class Despesa {
         this.valor = valor;
         this.status = status;
         this.categoria = categoria;
+        this.data = data;
     }
 
 
