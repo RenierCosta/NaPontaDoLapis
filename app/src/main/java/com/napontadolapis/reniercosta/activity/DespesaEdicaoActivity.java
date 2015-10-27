@@ -198,6 +198,7 @@ public class DespesaEdicaoActivity extends Activity {
     @Override
     protected void onDestroy() {
         despesaDAO.close();
+        categoriaDAO.close();
         super.onDestroy();
     }
 
