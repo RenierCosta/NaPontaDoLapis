@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Spinner;
 
 import com.napontadolapis.reniercosta.R;
 import com.napontadolapis.reniercosta.dao.DatabaseHelper;
@@ -16,8 +18,10 @@ import com.napontadolapis.reniercosta.model.Constantes;
 import com.napontadolapis.reniercosta.model.Despesa;
 
 import java.text.NumberFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -29,14 +33,74 @@ public class DespesaCadastroActivity extends Activity {
     private List<Map<String, Object>>  despesas;
     private ListView listViewDespesasCadastro;
     private DespesaDAO despesaDAO;
+    private Spinner spnDatasParaFiltrarDespesas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_despesa_cadastro);
+        spnDatasParaFiltrarDespesas = (Spinner) findViewById(R.id.spnDatasParaFiltrarDespesas);
+        try {
+            carregarSpinnerDeFiltroPorData();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         despesaDAO = new DespesaDAO(this);
         dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        CarregarListaDeDespesas();
+        try {
+            carregarListaDeDespesas(obterDataSelecionada());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void carregarSpinnerDeFiltroPorData() throws ParseException {
+        Date dataInicial, dataAtual = new Date();
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+
+        dataInicial = format.parse("01/01/2015");
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(dataInicial);
+        format.applyPattern("MM/yyyy");
+        List<String> listaDeDatas = new ArrayList<>();
+
+        dataAtual = calendar.getTime();
+        listaDeDatas.add(format.format(dataAtual));
+
+        for (int i=0;i < 11;i++){
+            calendar.add(Calendar.MONTH, 1);
+            dataAtual = calendar.getTime();
+            listaDeDatas.add(format.format(dataAtual));
+        }
+
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter(this,
+                android.R.layout.simple_spinner_item, listaDeDatas);
+
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnDatasParaFiltrarDespesas.setAdapter(arrayAdapter);
+
+        spnDatasParaFiltrarDespesas.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                try {
+                    carregarListaDeDespesas(obterDataSelecionada());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    private Date obterDataSelecionada() throws ParseException {
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        Date dataParaFiltrar = format.parse("01/" + spnDatasParaFiltrarDespesas.getSelectedItem().toString());
+        return dataParaFiltrar;
     }
 
     public void onClickbtnNovaDespesaCadastro(View view){
@@ -59,16 +123,20 @@ public class DespesaCadastroActivity extends Activity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK){
-            CarregarListaDeDespesas();
+            try {
+                carregarListaDeDespesas(obterDataSelecionada());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    private void CarregarListaDeDespesas() {
+    private void carregarListaDeDespesas(Date dataParaFiltrar) {
         String[] de = { "VisualizacaoDaDescricao","VisualizacaoDoVencimento", "VisualizacaoDoValor" };
         int[] para = { R.id.lblDescricaoDespesaCadastro, R.id.lblVencimentoDespesaCadastro, R.id.lblValorDepesaCadastro};
 
         SimpleAdapter adapter = new SimpleAdapter(this,
-                listarDespesas(), R.layout.lista_de_despesas, de, para);
+                listarDespesas(dataParaFiltrar), R.layout.lista_de_despesas, de, para);
 
         listViewDespesasCadastro = (ListView) findViewById(R.id.listaDespesasCadastro);
         listViewDespesasCadastro.setAdapter(adapter);
@@ -87,7 +155,23 @@ public class DespesaCadastroActivity extends Activity {
 
     }
 
-    private List<Map<String, Object>> listarDespesas() {
+    private List<Map<String, Object>> listarDespesas(Date dataParaFiltrar) {
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat format = new SimpleDateFormat("yyy-MM-dd");
+        String camposParaFiltro = "data BETWEEN ? AND ?";
+
+        calendar.setTime(dataParaFiltrar);
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+
+        Date primeiroDiaDoMes = calendar.getTime();
+        calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+        Date ultimoDiaDoMes = calendar.getTime();
+
+
+        String [] valoresDosCamposParaFiltro = new String[]{format.format(primeiroDiaDoMes),
+                format.format(ultimoDiaDoMes)};
+
+        //List<Despesa> listaDedespesas = despesaDAO.listarTodosPorFiltro(camposParaFiltro,valoresDosCamposParaFiltro);
         List<Despesa> listaDedespesas = despesaDAO.listarTodos();
         despesas = new ArrayList<Map<String, Object>>();
 
