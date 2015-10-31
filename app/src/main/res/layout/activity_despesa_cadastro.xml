@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Nova despesa"
+        android:drawableLeft="@android:drawable/ic_input_add"
         android:id="@+id/btnNovaDespesaCadastro"
         android:onClick="onClickbtnNovaDespesaCadastro"
         android:layout_alignParentStart="true" />
@@ -22,7 +23,7 @@
         android:id="@+id/lblFiltrarDespesasPor" />
 
     <Spinner
-        android:layout_width="match_parent"
+        android:layout_width="168dp"
         android:layout_height="wrap_content"
         android:id="@+id/spnDatasParaFiltrarDespesas"
         android:spinnerMode="dialog"
