@@ -25,6 +25,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class DespesaCadastroActivity extends Activity {
@@ -46,7 +47,7 @@ public class DespesaCadastroActivity extends Activity {
             e.printStackTrace();
         }
         despesaDAO = new DespesaDAO(this);
-        dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        dateFormat = new SimpleDateFormat(Constantes.MASCARA_DE_DATA_PARA_TELA);
         try {
             carregarListaDeDespesas(obterDataSelecionada());
         } catch (ParseException e) {
@@ -55,8 +56,9 @@ public class DespesaCadastroActivity extends Activity {
     }
 
     private void carregarSpinnerDeFiltroPorData() throws ParseException {
-        Date dataInicial, dataAtual = new Date();
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        Date dataInicial;
+        Date dataAtual;
+        SimpleDateFormat format = new SimpleDateFormat(Constantes.MASCARA_DE_DATA_PARA_TELA);
 
         dataInicial = format.parse("01/01/2015");
 
@@ -95,10 +97,12 @@ public class DespesaCadastroActivity extends Activity {
 
             }
         });
+
+        spnDatasParaFiltrarDespesas.setSelection(arrayAdapter.getPosition(format.format(new Date())));
     }
 
     private Date obterDataSelecionada() throws ParseException {
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat format = new SimpleDateFormat(Constantes.MASCARA_DE_DATA_PARA_TELA);
         Date dataParaFiltrar = format.parse("01/" + spnDatasParaFiltrarDespesas.getSelectedItem().toString());
         return dataParaFiltrar;
     }
@@ -157,7 +161,7 @@ public class DespesaCadastroActivity extends Activity {
 
     private List<Map<String, Object>> listarDespesas(Date dataParaFiltrar) {
         Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat format = new SimpleDateFormat("yyy-MM-dd");
+        SimpleDateFormat format = new SimpleDateFormat(Constantes.MASCARA_DE_DATA_PARA_BANCO);
         String camposParaFiltro = "data BETWEEN ? AND ?";
 
         calendar.setTime(dataParaFiltrar);

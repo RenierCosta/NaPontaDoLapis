@@ -14,4 +14,6 @@ public class Constantes {
     public static final String DESCRICAO_TIPO_CATEGORIA_RECEITA = "Receita";
     public static final String STATUS_PENDENTE = "Pendente";
     public static final String STATUS_PAGO = "Pago";
+    public static final String MASCARA_DE_DATA_PARA_BANCO = "yyyy-MM-dd";
+    public static final String MASCARA_DE_DATA_PARA_TELA = "dd/MM/yyyy";
 }

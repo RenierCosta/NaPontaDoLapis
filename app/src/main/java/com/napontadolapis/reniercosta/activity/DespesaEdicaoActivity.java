@@ -179,7 +179,7 @@ public class DespesaEdicaoActivity extends Activity {
         edtDescricao.setText(despesa.getDescricao());
         dataVencimento = despesa.getVencimento();
         dataDataDespesa = despesa.getData();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat dateFormat = new SimpleDateFormat(Constantes.MASCARA_DE_DATA_PARA_TELA);
         btndataVencimento.setText(dateFormat.format(dataVencimento));
         btndataDataDespesa.setText(dateFormat.format(dataDataDespesa));
         edtValor.setText(String.valueOf(despesa.getValor()));
@@ -228,7 +228,7 @@ public class DespesaEdicaoActivity extends Activity {
     }
 
     private void salvarAlteracoes() throws ParseException{
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat(Constantes.MASCARA_DE_DATA_PARA_TELA);
         Date vencimento = sdf.parse(btndataVencimento.getText().toString());
         Date dataDespesa = sdf.parse(btndataDataDespesa.getText().toString());
 

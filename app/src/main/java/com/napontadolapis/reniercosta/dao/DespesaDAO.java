@@ -5,8 +5,12 @@ import android.content.Context;
 import android.database.Cursor;
 
 import com.napontadolapis.reniercosta.model.Categoria;
+import com.napontadolapis.reniercosta.model.Constantes;
 import com.napontadolapis.reniercosta.model.Despesa;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,16 +27,21 @@ public class DespesaDAO extends ClasseBaseDAO {
 
     public boolean inserir(Despesa despesa){
         long resultado;
-        ContentValues values = new ContentValues();
+        resultado = getDb().insert(DatabaseHelper.Despesa.TABELA, null, obterValuesDaDespesa(despesa));
+        return resultado != -1;
+    }
 
+    private ContentValues obterValuesDaDespesa(Despesa despesa){
+        ContentValues values = new ContentValues();
+        SimpleDateFormat dateFormat = new SimpleDateFormat(Constantes.MASCARA_DE_DATA_PARA_BANCO);
         values.put(DatabaseHelper.Despesa.DESCRICAO, despesa.getDescricao());
-        values.put(DatabaseHelper.Despesa.VENCIMENTO, despesa.getVencimento().getTime());
+        values.put(DatabaseHelper.Despesa.VENCIMENTO, dateFormat.format(despesa.getVencimento()));
         values.put(DatabaseHelper.Despesa.VALOR, despesa.getValor());
         values.put(DatabaseHelper.Despesa.STATUS, despesa.getStatus());
         values.put(DatabaseHelper.Despesa.CATEGORIA_ID, despesa.getCategoria().getId());
-        values.put(DatabaseHelper.Despesa.DATA, despesa.getData().getTime());
-        resultado = getDb().insert(DatabaseHelper.Despesa.TABELA, null, values);
-        return resultado != -1;
+        values.put(DatabaseHelper.Despesa.DATA, dateFormat.format(despesa.getData()));
+
+        return values;
     }
 
     public boolean remover(Long idDespesa){
@@ -51,15 +60,7 @@ public class DespesaDAO extends ClasseBaseDAO {
         long resultado;
         String whereClause = DatabaseHelper.Despesa._ID + " = ?";
         String[] whereArgs = new String[]{despesa.getId().toString()};
-        ContentValues values = new ContentValues();
-
-        values.put(DatabaseHelper.Despesa.DESCRICAO, despesa.getDescricao());
-        values.put(DatabaseHelper.Despesa.VENCIMENTO, despesa.getVencimento().getTime());
-        values.put(DatabaseHelper.Despesa.VALOR, despesa.getValor());
-        values.put(DatabaseHelper.Despesa.STATUS, despesa.getStatus());
-        values.put(DatabaseHelper.Despesa.CATEGORIA_ID, despesa.getCategoria().getId());
-        values.put(DatabaseHelper.Despesa.DATA, despesa.getData().getTime());
-        resultado = getDb().update(DatabaseHelper.Despesa.TABELA, values, whereClause, whereArgs);
+        resultado = getDb().update(DatabaseHelper.Despesa.TABELA, obterValuesDaDespesa(despesa), whereClause, whereArgs);
         return resultado != -1;
     }
 
@@ -108,13 +109,22 @@ public class DespesaDAO extends ClasseBaseDAO {
     }
 
     private Despesa criarDespesa(Cursor cursor) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(Constantes.MASCARA_DE_DATA_PARA_BANCO);
+
         Long id = cursor.getLong(cursor.getColumnIndex(DatabaseHelper.Despesa._ID));
         String descricao = cursor.getString(cursor.getColumnIndex(DatabaseHelper.Despesa.DESCRICAO));
-        Date vencimento = new Date(cursor.getLong(cursor.getColumnIndex(DatabaseHelper.Despesa.VENCIMENTO)));
+        Date vencimento = null;
+        Date data = null;
+        try {
+            vencimento = dateFormat.parse(cursor.getString(cursor.getColumnIndex(DatabaseHelper.Despesa.VENCIMENTO)));
+            data = dateFormat.parse(cursor.getString(cursor.getColumnIndex(DatabaseHelper.Despesa.DATA)));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         Double valor = cursor.getDouble((cursor.getColumnIndex(DatabaseHelper.Despesa.VALOR)));
         String status = cursor.getString(cursor.getColumnIndex(DatabaseHelper.Despesa.STATUS));
         Categoria categoria = categoriaDAO.buscarCategoriaPorId(cursor.getLong(cursor.getColumnIndex(DatabaseHelper.Despesa.CATEGORIA_ID)));
-        Date data = new Date(cursor.getLong(cursor.getColumnIndex(DatabaseHelper.Despesa.DATA)));
+
 
         Despesa despesa = new Despesa(id, descricao, vencimento, valor, status, categoria, data);
         return despesa;
