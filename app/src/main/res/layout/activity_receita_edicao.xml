@@ -9,18 +9,66 @@
         android:id="@+id/edtDescricaoReceita"
         android:hint="Descrição(Salário, Venda de carro, etc)" />
 
-    <EditText
+    <TableRow
         android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Data"
+            android:id="@+id/lblDataReceita" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="01/01/2015"
+            android:id="@+id/btnDataReceita" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Recebimento"
+            android:id="@+id/lblRecebimentoReceita" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="01/01/2015"
+            android:id="@+id/btnRecebimentoReceita" />
+    </TableRow>
+
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="date"
-        android:ems="10"
-        android:id="@+id/edtDataDeRecebimentoDaReceita"
-        android:hint="Data de recebimento(Somente números)" />
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Categoria"
+        android:id="@+id/lblCategoriaReceita" />
 
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/spnCategoriaReceita" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Status"
+        android:id="@+id/lblStatusReceita" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spnStatusReceita"
+        android:spinnerMode="dialog" />
 
     <EditText
         android:layout_width="match_parent"

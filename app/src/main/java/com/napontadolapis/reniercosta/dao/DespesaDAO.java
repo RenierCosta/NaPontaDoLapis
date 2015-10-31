@@ -25,12 +25,6 @@ public class DespesaDAO extends ClasseBaseDAO {
         categoriaDAO = new CategoriaDAO(context);
     }
 
-    public boolean inserir(Despesa despesa){
-        long resultado;
-        resultado = getDb().insert(DatabaseHelper.Despesa.TABELA, null, obterValuesDaDespesa(despesa));
-        return resultado != -1;
-    }
-
     private ContentValues obterValuesDaDespesa(Despesa despesa){
         ContentValues values = new ContentValues();
         SimpleDateFormat dateFormat = new SimpleDateFormat(Constantes.MASCARA_DE_DATA_PARA_BANCO);
@@ -42,6 +36,46 @@ public class DespesaDAO extends ClasseBaseDAO {
         values.put(DatabaseHelper.Despesa.DATA, dateFormat.format(despesa.getData()));
 
         return values;
+    }
+
+    private List<Despesa> obterListaDeDespesa(Cursor cursor){
+        List<Despesa> despesas = new ArrayList<Despesa>();
+
+        while(cursor.moveToNext()){
+            Despesa despesa = criarDespesa(cursor);
+            despesas.add(despesa);
+        }
+        cursor.close();
+
+        return despesas;
+    }
+
+    private Despesa criarDespesa(Cursor cursor) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(Constantes.MASCARA_DE_DATA_PARA_BANCO);
+
+        Long id = cursor.getLong(cursor.getColumnIndex(DatabaseHelper.Despesa._ID));
+        String descricao = cursor.getString(cursor.getColumnIndex(DatabaseHelper.Despesa.DESCRICAO));
+        Date vencimento = null;
+        Date data = null;
+        try {
+            vencimento = dateFormat.parse(cursor.getString(cursor.getColumnIndex(DatabaseHelper.Despesa.VENCIMENTO)));
+            data = dateFormat.parse(cursor.getString(cursor.getColumnIndex(DatabaseHelper.Despesa.DATA)));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Double valor = cursor.getDouble((cursor.getColumnIndex(DatabaseHelper.Despesa.VALOR)));
+        String status = cursor.getString(cursor.getColumnIndex(DatabaseHelper.Despesa.STATUS));
+        Categoria categoria = categoriaDAO.buscarCategoriaPorId(cursor.getLong(cursor.getColumnIndex(DatabaseHelper.Despesa.CATEGORIA_ID)));
+
+
+        Despesa despesa = new Despesa(id, descricao, vencimento, valor, status, categoria, data);
+        return despesa;
+    }
+
+    public boolean inserir(Despesa despesa){
+        long resultado;
+        resultado = getDb().insert(DatabaseHelper.Despesa.TABELA, null, obterValuesDaDespesa(despesa));
+        return resultado != -1;
     }
 
     public boolean remover(Long idDespesa){
@@ -68,26 +102,14 @@ public class DespesaDAO extends ClasseBaseDAO {
         Cursor cursor = getDb().query(DatabaseHelper.Despesa.TABELA,
                 DatabaseHelper.Despesa.COLUNAS, null, null, null, null, null);
 
-        return obterListaDeDepesa(cursor);
+        return obterListaDeDespesa(cursor);
     }
 
     public List<Despesa> listarTodosPorFiltro(String selection, String[] selecionArgs){
         Cursor cursor = getDb().query(DatabaseHelper.Despesa.TABELA,
                 DatabaseHelper.Despesa.COLUNAS, selection, selecionArgs, null, null, null);
 
-        return obterListaDeDepesa(cursor);
-    }
-
-    private List<Despesa> obterListaDeDepesa(Cursor cursor){
-        List<Despesa> despesas = new ArrayList<Despesa>();
-
-        while(cursor.moveToNext()){
-            Despesa despesa = criarDespesa(cursor);
-            despesas.add(despesa);
-        }
-        cursor.close();
-
-        return despesas;
+        return obterListaDeDespesa(cursor);
     }
 
     public Despesa buscarDespesaPorId(Long idDespesa){
@@ -105,27 +127,4 @@ public class DespesaDAO extends ClasseBaseDAO {
 
         return null;
     }
-
-    private Despesa criarDespesa(Cursor cursor) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat(Constantes.MASCARA_DE_DATA_PARA_BANCO);
-
-        Long id = cursor.getLong(cursor.getColumnIndex(DatabaseHelper.Despesa._ID));
-        String descricao = cursor.getString(cursor.getColumnIndex(DatabaseHelper.Despesa.DESCRICAO));
-        Date vencimento = null;
-        Date data = null;
-        try {
-            vencimento = dateFormat.parse(cursor.getString(cursor.getColumnIndex(DatabaseHelper.Despesa.VENCIMENTO)));
-            data = dateFormat.parse(cursor.getString(cursor.getColumnIndex(DatabaseHelper.Despesa.DATA)));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        Double valor = cursor.getDouble((cursor.getColumnIndex(DatabaseHelper.Despesa.VALOR)));
-        String status = cursor.getString(cursor.getColumnIndex(DatabaseHelper.Despesa.STATUS));
-        Categoria categoria = categoriaDAO.buscarCategoriaPorId(cursor.getLong(cursor.getColumnIndex(DatabaseHelper.Despesa.CATEGORIA_ID)));
-
-
-        Despesa despesa = new Despesa(id, descricao, vencimento, valor, status, categoria, data);
-        return despesa;
-    }
-
 }
