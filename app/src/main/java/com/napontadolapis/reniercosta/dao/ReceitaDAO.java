@@ -20,6 +20,7 @@ public class ReceitaDAO extends ClasseBaseDAO {
 
     public ReceitaDAO(Context context) {
         super(context);
+        categoriaDAO = new CategoriaDAO(context);
     }
 
     private ContentValues obterValuesDaReceita(Receita receita){
