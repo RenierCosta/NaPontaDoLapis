@@ -81,7 +81,8 @@ public class DespesaEdicaoActivity extends Activity {
     }
 
     private void carregarSpinnerCategoria() {
-        List<Categoria> categorias = categoriaDAO.listarTodos();
+        List<Categoria> categorias = categoriaDAO.listarTodosPorFiltro("tipo = ?",
+                new String [] {String.valueOf(Constantes.ID_TIPO_CATEGORIA_DESPESA)});
         ArrayAdapter<Categoria> arrayAdapter = new ArrayAdapter<Categoria>(this,
                 android.R.layout.simple_spinner_item, categorias);
 

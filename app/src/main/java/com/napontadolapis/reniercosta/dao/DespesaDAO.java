@@ -68,20 +68,17 @@ public class DespesaDAO extends ClasseBaseDAO {
         Cursor cursor = getDb().query(DatabaseHelper.Despesa.TABELA,
                 DatabaseHelper.Despesa.COLUNAS, null, null, null, null, null);
 
-        List<Despesa> despesas = new ArrayList<Despesa>();
-
-        while(cursor.moveToNext()){
-            Despesa despesa = criarDespesa(cursor);
-            despesas.add(despesa);
-        }
-        cursor.close();
-        return despesas;
+        return obterListaDeDepesa(cursor);
     }
 
     public List<Despesa> listarTodosPorFiltro(String selection, String[] selecionArgs){
         Cursor cursor = getDb().query(DatabaseHelper.Despesa.TABELA,
                 DatabaseHelper.Despesa.COLUNAS, selection, selecionArgs, null, null, null);
 
+        return obterListaDeDepesa(cursor);
+    }
+
+    private List<Despesa> obterListaDeDepesa(Cursor cursor){
         List<Despesa> despesas = new ArrayList<Despesa>();
 
         while(cursor.moveToNext()){
@@ -89,6 +86,7 @@ public class DespesaDAO extends ClasseBaseDAO {
             despesas.add(despesa);
         }
         cursor.close();
+
         return despesas;
     }
 

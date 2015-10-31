@@ -16,10 +16,7 @@ public class CategoriaDAO extends ClasseBaseDAO {
 
     public boolean inserir(Categoria categoria){
         long resultado;
-        ContentValues values = new ContentValues();
-        values.put(DatabaseHelper.Categoria.DESCRICAO, categoria.getDescricao());
-        values.put(DatabaseHelper.Categoria.TIPO, categoria.getTipo());
-        resultado = getDb().insert(DatabaseHelper.Categoria.TABELA, null, values);
+        resultado = getDb().insert(DatabaseHelper.Categoria.TABELA, null, obterValuesDaCategoria(categoria));
         return resultado != -1;
     }
 
@@ -39,18 +36,32 @@ public class CategoriaDAO extends ClasseBaseDAO {
         long resultado;
         String whereClause = DatabaseHelper.Categoria._ID + " = ?";
         String[] whereArgs = new String[]{categoria.getId().toString()};
-        ContentValues values = new ContentValues();
+        resultado = getDb().update(DatabaseHelper.Categoria.TABELA, obterValuesDaCategoria(categoria), whereClause, whereArgs);
+        return resultado != -1;
+    }
 
+    private ContentValues obterValuesDaCategoria(Categoria categoria){
+        ContentValues values = new ContentValues();
         values.put(DatabaseHelper.Categoria.DESCRICAO, categoria.getDescricao());
         values.put(DatabaseHelper.Categoria.TIPO, categoria.getTipo());
-        resultado = getDb().update(DatabaseHelper.Categoria.TABELA, values, whereClause, whereArgs);
-        return resultado != -1;
+        return values;
     }
 
     public List<Categoria> listarTodos(){
         Cursor cursor = getDb().query(DatabaseHelper.Categoria.TABELA,
                 DatabaseHelper.Categoria.COLUNAS, null, null, null, null, null);
 
+        return obterListaDeCategoria(cursor);
+    }
+
+    public List<Categoria> listarTodosPorFiltro(String selection, String[] selecionArgs){
+        Cursor cursor = getDb().query(DatabaseHelper.Categoria.TABELA,
+                DatabaseHelper.Categoria.COLUNAS, selection, selecionArgs, null, null, null);
+
+        return obterListaDeCategoria(cursor);
+    }
+
+    private List<Categoria> obterListaDeCategoria(Cursor cursor){
         List<Categoria> categorias = new ArrayList<Categoria>();
 
         while(cursor.moveToNext()){
@@ -58,6 +69,7 @@ public class CategoriaDAO extends ClasseBaseDAO {
             categorias.add(despesa);
         }
         cursor.close();
+
         return categorias;
     }
 
