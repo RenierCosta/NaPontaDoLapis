@@ -141,7 +141,7 @@ public class ReceitaCadastroActivity extends Activity{
             item.put(DatabaseHelper.Receita.RECEBIMENTO, dateFormat.format(recebimento));
             item.put("VisualizacaoDoVencimento", "Recebimento: " + dateFormat.format(recebimento));
             item.put("VisualizacaoDaDescricao", descricao);
-            item.put("VisualizacaoDoValor", "Valor: R" + NumberFormat.getCurrencyInstance().format(valor));
+            item.put("VisualizacaoDoValor", "Valor: " + NumberFormat.getCurrencyInstance().format(valor));
             item.put(DatabaseHelper.Receita.VALOR, valor);
             item.put(DatabaseHelper.Receita.STATUS, status);
             item.put(DatabaseHelper.Receita.CATEGORIA_ID, categoria_Id);

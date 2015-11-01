@@ -195,7 +195,7 @@ public class DespesaCadastroActivity extends Activity {
             item.put(DatabaseHelper.Despesa.VENCIMENTO, dateFormat.format(vencimento));
             item.put("VisualizacaoDoVencimento", "Vencimento: " + dateFormat.format(vencimento));
             item.put("VisualizacaoDaDescricao", descricao);
-            item.put("VisualizacaoDoValor", "Valor: R" + NumberFormat.getCurrencyInstance().format(valor));
+            item.put("VisualizacaoDoValor", "Valor: " + NumberFormat.getCurrencyInstance().format(valor));
             item.put(DatabaseHelper.Despesa.VALOR, valor);
             item.put(DatabaseHelper.Despesa.STATUS, status);
             item.put(DatabaseHelper.Despesa.CATEGORIA_ID, categoria_Id);

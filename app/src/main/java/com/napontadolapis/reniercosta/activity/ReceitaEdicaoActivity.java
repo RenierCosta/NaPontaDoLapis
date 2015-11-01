@@ -225,6 +225,10 @@ public class ReceitaEdicaoActivity extends Activity{
         this.finish();
     }
 
+    public void onClickSelecionarData(View view) {
+        showDialog(view.getId());
+    }
+
     private void salvarAlteracoes() throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat(Constantes.MASCARA_DE_DATA_PARA_TELA);
         Date recebimento = sdf.parse(btndataRecebimento.getText().toString());
