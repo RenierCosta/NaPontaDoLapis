@@ -31,6 +31,14 @@
             android:name=".activity.CategoriaCadastroActivity"
             android:label="Despesas cadastro" >
         </activity>
+        <activity
+            android:name=".activity.ReceitaCadastroActivity"
+            android:label="Despesas cadastro" >
+        </activity>
+        <activity
+            android:name=".activity.ReceitaEdicaoActivity"
+            android:label="Despesas cadastro" >
+        </activity>
     </application>
 
 </manifest>

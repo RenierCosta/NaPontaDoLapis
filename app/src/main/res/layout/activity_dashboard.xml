@@ -34,6 +34,7 @@
             android:layout_height="wrap_content"
             android:text="Receitas"
             android:id="@+id/btnReceitas"
+            android:onClick="receitasOnClick"
             android:layout_gravity="center_horizontal" />
 
         <Button

@@ -175,8 +175,8 @@ public class DespesaCadastroActivity extends Activity {
         String [] valoresDosCamposParaFiltro = new String[]{format.format(primeiroDiaDoMes),
                 format.format(ultimoDiaDoMes)};
 
-        //List<Despesa> listaDedespesas = despesaDAO.listarTodosPorFiltro(camposParaFiltro,valoresDosCamposParaFiltro);
-        List<Despesa> listaDedespesas = despesaDAO.listarTodos();
+        List<Despesa> listaDedespesas = despesaDAO.listarTodosPorFiltro(camposParaFiltro,valoresDosCamposParaFiltro);
+
         despesas = new ArrayList<Map<String, Object>>();
 
         for (Despesa despesa : listaDedespesas){

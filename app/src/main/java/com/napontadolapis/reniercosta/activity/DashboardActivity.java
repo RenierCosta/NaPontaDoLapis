@@ -13,10 +13,12 @@ import com.napontadolapis.reniercosta.R;
 
 public class DashboardActivity extends Activity {
 
-    private Button FbtnDespesas;
-
     public void despesasOnClick(View v){
         startActivity(new Intent(DashboardActivity.this, DespesaCadastroActivity.class));
+    }
+
+    public void receitasOnClick(View v){
+        startActivity(new Intent(DashboardActivity.this, ReceitaCadastroActivity.class));
     }
 
     public void categoriasOnClick(View v){
@@ -27,8 +29,6 @@ public class DashboardActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-
-        FbtnDespesas = (Button) findViewById(R.id.btnDespesas);
     }
 
     @Override

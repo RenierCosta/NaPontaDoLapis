@@ -88,12 +88,14 @@
             android:layout_height="wrap_content"
             android:text="Gravar"
             android:id="@+id/btnGravarReceita"
+            android:onClick="btnGravarReceitaOnClik"
             android:layout_weight=".5" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Cancelar"
+            android:onClick="onClickCancelarReceita"
             android:id="@+id/btnCancelarReceita"
             android:layout_weight=".5" />
     </LinearLayout>
@@ -108,6 +110,7 @@
             android:layout_height="wrap_content"
             android:text="Apagar"
             android:id="@+id/btnApagarReceita"
+            android:onClick="onClickApagarReceita"
             android:layout_gravity="center_horizontal" />
     </LinearLayout>
 </LinearLayout>

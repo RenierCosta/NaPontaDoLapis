@@ -67,11 +67,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 " tipo INTEGER);");
 
         db.execSQL("CREATE TABLE receita (_id INTEGER PRIMARY KEY," +
-                " descricao TEXT, data_recebimento DATE," +
-                " categoria_id INTEGER," +
-                " valor DOUBLE);");
-
-        db.execSQL("CREATE TABLE receita (_id INTEGER PRIMARY KEY," +
                 " descricao TEXT, recebimento DATE, data DATE," +
                 " valor DOUBLE," +
                 " status TEXT," +
