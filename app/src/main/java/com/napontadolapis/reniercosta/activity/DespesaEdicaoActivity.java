@@ -33,7 +33,6 @@ public class DespesaEdicaoActivity extends Activity {
     private Spinner spnCategoria;
     private Spinner spnStatus;
     private String idDespesa;
-    private SimpleDateFormat dateFormat;
     private int ano, mes, dia;
     private Button btndataVencimento;
     private Button btndataDataDespesa;
@@ -49,6 +48,7 @@ public class DespesaEdicaoActivity extends Activity {
 
         despesaDAO = new DespesaDAO(this);
         categoriaDAO = new CategoriaDAO(this);
+
 
         //sempre inicializo assim
         setResult(RESULT_CANCELED);
@@ -224,8 +224,44 @@ public class DespesaEdicaoActivity extends Activity {
     }
 
     public void btnGravarDespesaOnClik(View view) throws ParseException {
-        salvarAlteracoes();
-        this.finish();
+        if (validarInformacoes()){
+            salvarAlteracoes();
+            this.finish();
+        }
+    }
+
+    private boolean validarInformacoes() {
+        if (edtDescricao.getText().toString().equals("")){
+            edtDescricao.setError("Informe a descrição");
+            edtDescricao.setFocusable(true);
+            edtDescricao.requestFocus();
+            return false;
+        }
+
+        if (edtValor.getText().toString().equals("")){
+            edtValor.setError("Informe o valor");
+            edtValor.setFocusable(true);
+            edtValor.requestFocus();
+            return false;
+        }
+
+        Date dataDespesa = null, vencimentoDespesa = null;
+        SimpleDateFormat formatacaoDeData = new SimpleDateFormat(Constantes.MASCARA_DE_DATA_PARA_TELA);
+
+        try {
+            dataDespesa = formatacaoDeData.parse(btndataDataDespesa.getText().toString());
+            vencimentoDespesa = formatacaoDeData.parse(btndataVencimento.getText().toString());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        if (dataVencimento.before(dataDespesa)){
+            Toast.makeText(this, "Data de vencimento deverá ser maior ou igual que a data da despesa",
+                    Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        return true;
     }
 
     private void salvarAlteracoes() throws ParseException{

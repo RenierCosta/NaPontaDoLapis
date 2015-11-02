@@ -39,9 +39,9 @@ public class CategoriaEdicaoActivity extends Activity {
         idCategoria = getIntent().getStringExtra(Constantes.CATEGORIA_ID);
 
         if (idCategoria != null) {
-            carregarDespesaAtual();
+            carregarCategoriaAtual();
             rdbTipoDespesa.setEnabled(false);
-            rdbTipoDespesa.setEnabled(false);
+            rdbTipoReceita.setEnabled(false);
         }else {
             btnApagarCategoria.setEnabled(false);
             rdbTipoDespesa.setChecked(true);
@@ -61,7 +61,7 @@ public class CategoriaEdicaoActivity extends Activity {
         btnApagarCategoria = (Button) findViewById(R.id.btnApagarCategoria);
     }
 
-    private void carregarDespesaAtual() {
+    private void carregarCategoriaAtual() {
         Categoria categoria = categoriaDAO.buscarCategoriaPorId(Long.valueOf(idCategoria));
 
         edtDescricao.setText(categoria.getDescricao());
@@ -79,13 +79,13 @@ public class CategoriaEdicaoActivity extends Activity {
 
     public void onClickApagarCategoria(View view){
         if(validarAntesDeApagar()) {
-            apagarDespesa(idCategoria);
+            apagarCategoria(idCategoria);
             finish();
         }
     }
 
-    private void apagarDespesa(String idDespesa) {
-        boolean resultado = categoriaDAO.remover(Long.valueOf(idDespesa));
+    private void apagarCategoria(String idCategoria) {
+        boolean resultado = categoriaDAO.remover(Long.valueOf(idCategoria));
 
         if (resultado){
             Toast.makeText(this, getString(R.string.registro_apagado),
@@ -117,7 +117,7 @@ public class CategoriaEdicaoActivity extends Activity {
         return true;
     }
 
-    public void btnGravarDespesaOnClik(View view) throws ParseException {
+    public void btnGravarCategoriaOnClik(View view) throws ParseException {
         if (validarInformacoes()) {
             salvarAlteracoes();
             this.finish();
