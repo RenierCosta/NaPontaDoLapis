@@ -202,4 +202,8 @@ public class ReceitaCadastroActivity extends Activity{
 
         spnDatasParaFiltrarReceitas.setSelection(arrayAdapter.getPosition(format.format(new Date())));
     }
+
+    public void onClickRadioButtonCategoriasReceitas(View v){
+
+    }
 }
