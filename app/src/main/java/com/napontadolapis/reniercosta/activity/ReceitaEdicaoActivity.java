@@ -221,8 +221,44 @@ public class ReceitaEdicaoActivity extends Activity{
     }
 
     public void btnGravarReceitaOnClik(View v) throws ParseException {
-        salvarAlteracoes();
-        this.finish();
+        if (validarInformacoes()) {
+            salvarAlteracoes();
+            this.finish();
+        }
+    }
+
+    private boolean validarInformacoes() {
+        if (edtDescricao.getText().toString().equals("")){
+            edtDescricao.setError("Informe a descrição");
+            edtDescricao.setFocusable(true);
+            edtDescricao.requestFocus();
+            return false;
+        }
+
+        if (edtValor.getText().toString().equals("")){
+            edtValor.setError("Informe o valor");
+            edtValor.setFocusable(true);
+            edtValor.requestFocus();
+            return false;
+        }
+
+        Date dataReceita = null, recebimentoReceita = null;
+        SimpleDateFormat formatacaoDeData = new SimpleDateFormat(Constantes.MASCARA_DE_DATA_PARA_TELA);
+
+        try {
+            dataReceita = formatacaoDeData.parse(btnDataReceita.getText().toString());
+            recebimentoReceita = formatacaoDeData.parse(btndataRecebimento.getText().toString());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        if (recebimentoReceita.before(dataReceita)){
+            Toast.makeText(this, "Data de recebimento deverá ser maior ou igual que a data da receita",
+                    Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        return true;
     }
 
     public void onClickSelecionarData(View view) {
