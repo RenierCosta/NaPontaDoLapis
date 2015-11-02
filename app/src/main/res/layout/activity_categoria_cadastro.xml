@@ -6,7 +6,6 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Nova categoria"
         android:drawableLeft="@android:drawable/ic_input_add"
         android:id="@+id/btnNovaCategoriaCadastro"

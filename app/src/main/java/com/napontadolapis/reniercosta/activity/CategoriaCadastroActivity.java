@@ -107,7 +107,7 @@ public class CategoriaCadastroActivity extends Activity{
             item.put(DatabaseHelper.Categoria.DESCRICAO, descricao);
             item.put(DatabaseHelper.Categoria.TIPO, tipo);
             item.put("VisualizacaoDaDescricao", descricao);
-            item.put("VisualizacaoDoTipo", "Tipo de categoria: " + descricaoTipoCategoria);
+            item.put("VisualizacaoDoTipo", "Categoria: " + descricaoTipoCategoria);
 
             categorias.add(item);
         }
