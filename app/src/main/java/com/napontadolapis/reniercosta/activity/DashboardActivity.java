@@ -25,6 +25,10 @@ public class DashboardActivity extends Activity {
         startActivity(new Intent(DashboardActivity.this, CategoriaCadastroActivity.class));
     }
 
+    public void resumosOnClick(View v){
+        startActivity(new Intent(DashboardActivity.this, ResumoLancamentosActivity.class));
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

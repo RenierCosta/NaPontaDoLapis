@@ -21,23 +21,27 @@
         </activity>
         <activity
             android:name=".activity.DespesaEdicaoActivity"
-            android:label="Despesas cadastro" >
+            android:label="Despesas edição" >
         </activity>
         <activity
             android:name=".activity.CategoriaEdicaoActivity"
-            android:label="Despesas cadastro" >
+            android:label="Categoria edição" >
         </activity>
         <activity
             android:name=".activity.CategoriaCadastroActivity"
-            android:label="Despesas cadastro" >
+            android:label="Categoria cadastro" >
         </activity>
         <activity
             android:name=".activity.ReceitaCadastroActivity"
-            android:label="Despesas cadastro" >
+            android:label="Receita cadastro" >
         </activity>
         <activity
             android:name=".activity.ReceitaEdicaoActivity"
-            android:label="Despesas cadastro" >
+            android:label="Receita edição" >
+        </activity>
+        <activity
+            android:name=".activity.ResumoLancamentosActivity"
+            android:label="Resumo dos lançamentos" >
         </activity>
     </application>
 

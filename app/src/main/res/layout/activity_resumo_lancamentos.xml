@@ -1,6 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-</LinearLayout>
+<ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <TableLayout android:background="#ffffffff" android:layout_width="fill_parent" android:layout_height="fill_parent" android:stretchColumns="1"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+        <TextView android:textSize="20.0dip" android:textColor="@color/preto" android:text="Geral" />
+        <View android:background="#ff909090" android:layout_height="2.0dip" />
+        <TableRow>
+            <TextView android:textColor="@color/azul" android:id="@+id/labelResumoReceitas" android:text="@string/ResumoReceitas" />
+            <TextView android:textColor="@color/azul" android:layout_gravity="right" android:id="@+id/campoResumoReceitas" />
+        </TableRow>
+        <TableRow>
+            <TextView android:textColor="@color/vermelho" android:id="@+id/labelResumoDespesas" android:text="@string/ResumoDespesas" />
+            <TextView android:textColor="@color/vermelho" android:layout_gravity="right" android:id="@+id/campoResumoDespesas" />
+        </TableRow>
+        <View android:background="#ff909090" android:layout_height="2.0dip" />
+        <TableRow>
+            <TextView android:textColor="@color/preto" android:id="@+id/labelResumoSaldo" android:text="@string/ResumoSaldo" />
+            <TextView android:textColor="@color/preto" android:layout_gravity="right" android:id="@+id/campoResumoSaldo" />
+        </TableRow>
+        <TextView android:textSize="20.0dip" android:textColor="@color/preto" android:layout_marginTop="15.0px" android:text="Abertos" />
+        <View android:background="#ff909090" android:layout_height="2.0dip" />
+        <TableRow>
+            <TextView android:textColor="@color/azul" android:id="@+id/labelResumoReceitasAberto" android:text="@string/ResumoReceitas" />
+            <TextView android:textColor="@color/azul" android:layout_gravity="right" android:id="@+id/campoResumoReceitasAberto" />
+        </TableRow>
+        <TableRow>
+            <TextView android:textColor="@color/vermelho" android:id="@+id/labelResumoDespesasAberto" android:text="@string/ResumoDespesas" />
+            <TextView android:textColor="@color/vermelho" android:layout_gravity="right" android:id="@+id/campoResumoDespesasAberto" />
+        </TableRow>
+        <View android:background="#ff909090" android:layout_height="2.0dip" />
+        <TableRow>
+            <TextView android:textColor="@color/preto" android:id="@+id/labelResumoSaldoAberto" android:text="@string/ResumoSaldo" />
+            <TextView android:textColor="@color/preto" android:layout_gravity="right" android:id="@+id/campoResumoSaldoAberto" />
+        </TableRow>
+        <TextView android:textSize="20.0dip" android:textColor="@color/preto" android:layout_marginTop="15.0px" android:text="Saldo em Conta" />
+        <View android:background="#ff909090" android:layout_height="2.0dip" />
+        <TableRow>
+            <TextView android:textColor="@color/preto" android:id="@+id/labelResumoSaldoAtualContas" android:text="@string/ResumoSaldoAtualContas" />
+            <TextView android:textColor="@color/azul" android:layout_gravity="right" android:id="@+id/campoResumoSaldoAtualContas" />
+        </TableRow>
+        <LinearLayout android:gravity="bottom" android:layout_width="wrap_content" android:layout_height="fill_parent">
+            <Button android:layout_gravity="bottom" android:id="@+id/btnVoltarResumo" android:layout_width="fill_parent" android:layout_height="fill_parent" android:text="Voltar" />
+        </LinearLayout>
+    </TableLayout>
+</ScrollView>

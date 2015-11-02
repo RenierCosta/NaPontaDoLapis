@@ -50,6 +50,7 @@
             android:layout_height="wrap_content"
             android:text="Resumo"
             android:id="@+id/btnResumo"
+            android:onClick="resumosOnClick"
             android:layout_gravity="center_horizontal" />
     </LinearLayout>
 </LinearLayout>

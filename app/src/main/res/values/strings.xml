@@ -10,4 +10,8 @@
     <string name="categorias">Categorias</string>
     <string name="status">Status</string>
     <string name="FiltrarPor">Filtrar registros por</string>
+    <string name="ResumoReceitas">Receitas</string>
+    <string name="ResumoDespesas">Despesas</string>
+    <string name="ResumoSaldo">Saldo</string>
+    <string name="ResumoSaldoAtualContas">Saldo atual na(s) conta(s):</string>
 </resources>
