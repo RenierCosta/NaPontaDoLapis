@@ -17,7 +17,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/listaCategoriaCadastro"
-        android:layout_marginTop="38dp"
-        android:layout_below="@+id/btnNovaCategoriaCadastro"
+        android:layout_marginTop="18dp"
+        android:layout_below="@+id/spnTipoCategoria"
         android:layout_alignParentStart="true" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/btnNovaCategoriaCadastro"
+        android:id="@+id/spnTipoCategoria"
+        android:layout_below="@+id/btnNovaCategoriaCadastro"
+        android:layout_alignEnd="@+id/btnNovaCategoriaCadastro"
+        android:prompt="@string/Tiposdecategorias"
+        android:spinnerMode="dialog" />
 </RelativeLayout>

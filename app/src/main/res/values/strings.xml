@@ -14,4 +14,5 @@
     <string name="ResumoDespesas">Despesas</string>
     <string name="ResumoSaldo">Saldo</string>
     <string name="ResumoSaldoAtualContas">Saldo atual na(s) conta(s):</string>
+    <string name="Tiposdecategorias">Tipos de categorias</string>
 </resources>

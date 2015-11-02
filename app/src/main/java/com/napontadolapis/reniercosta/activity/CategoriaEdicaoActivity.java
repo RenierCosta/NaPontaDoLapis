@@ -40,6 +40,8 @@ public class CategoriaEdicaoActivity extends Activity {
 
         if (idCategoria != null) {
             carregarDespesaAtual();
+            rdbTipoDespesa.setEnabled(false);
+            rdbTipoDespesa.setEnabled(false);
         }else {
             btnApagarCategoria.setEnabled(false);
             rdbTipoDespesa.setChecked(true);

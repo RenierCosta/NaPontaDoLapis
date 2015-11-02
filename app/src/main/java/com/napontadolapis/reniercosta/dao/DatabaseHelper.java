@@ -4,6 +4,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.napontadolapis.reniercosta.model.Constantes;
+
 import java.util.Date;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -71,6 +73,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 " valor DOUBLE," +
                 " status TEXT," +
                 " categoria_id INTEGER);");
+
+        db.execSQL("INSERT INTO categoria (descricao, tipo) VALUES ('Salário', "+
+                String.valueOf(Constantes.ID_TIPO_CATEGORIA_RECEITA)+");");
+
+        db.execSQL("INSERT INTO categoria (descricao, tipo) VALUES ('Conta de consumo', "+
+                String.valueOf(Constantes.ID_TIPO_CATEGORIA_DESPESA)+");");
+
+        db.execSQL("INSERT INTO categoria (descricao, tipo) VALUES ('Cartão', "+
+                String.valueOf(Constantes.ID_TIPO_CATEGORIA_DESPESA)+");");
+
+        db.execSQL("INSERT INTO categoria (descricao, tipo) VALUES ('Alimentação', "+
+                String.valueOf(Constantes.ID_TIPO_CATEGORIA_DESPESA)+");");
+
+        db.execSQL("INSERT INTO categoria (descricao, tipo) VALUES ('Lazer', "+
+                String.valueOf(Constantes.ID_TIPO_CATEGORIA_DESPESA)+");");
     }
 
     @Override

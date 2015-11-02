@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Spinner;
 
 import com.napontadolapis.reniercosta.R;
 import com.napontadolapis.reniercosta.dao.CategoriaDAO;
@@ -16,6 +18,7 @@ import com.napontadolapis.reniercosta.model.Categoria;
 import com.napontadolapis.reniercosta.model.Constantes;
 
 import java.text.NumberFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -28,13 +31,45 @@ public class CategoriaCadastroActivity extends Activity{
     private List<Map<String, Object>> categorias;
     private ListView listViewCategoriasCadastro;
     private CategoriaDAO categoriasDAO;
+    private Spinner spnTipoCategoria;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categoria_cadastro);
+        spnTipoCategoria = (Spinner) findViewById(R.id.spnTipoCategoria);
+
+        CarregarSpinnerCategorias();
+
         categoriasDAO = new CategoriaDAO(this);
         CarregarListaDeCategorias();
+    }
+
+    private void CarregarSpinnerCategorias() {
+        List<String> status = new ArrayList<>();
+        status.add("Todos");
+        status.add(Constantes.DESCRICAO_TIPO_CATEGORIA_DESPESA);
+        status.add(Constantes.DESCRICAO_TIPO_CATEGORIA_RECEITA);
+
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item,
+                status);
+
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnTipoCategoria.setAdapter(arrayAdapter);
+
+        spnTipoCategoria.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                CarregarListaDeCategorias();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        spnTipoCategoria.setSelection(0);
     }
 
     private void CarregarListaDeCategorias() {
@@ -85,7 +120,20 @@ public class CategoriaCadastroActivity extends Activity{
     }
 
     private List<Map<String, Object>> listarCategorias() {
-        List<Categoria> listaDeCategorias = categoriasDAO.listarTodos();
+        List<Categoria> listaDeCategorias = null;
+
+        if (spnTipoCategoria.getSelectedItemPosition() == 0) {
+            listaDeCategorias = categoriasDAO.listarTodos();
+        } else
+          if (spnTipoCategoria.getSelectedItem().toString().equals(Constantes.DESCRICAO_TIPO_CATEGORIA_DESPESA)) {
+              listaDeCategorias = categoriasDAO.listarTodosPorFiltro("tipo = ?",
+                      new String[] {String.valueOf(Constantes.ID_TIPO_CATEGORIA_DESPESA)});
+          } else
+              if (spnTipoCategoria.getSelectedItem().toString().equals(Constantes.DESCRICAO_TIPO_CATEGORIA_RECEITA)){
+                  listaDeCategorias = categoriasDAO.listarTodosPorFiltro("tipo = ?",
+                          new String[] {String.valueOf(Constantes.ID_TIPO_CATEGORIA_RECEITA)});
+              }
+
         categorias = new ArrayList<Map<String, Object>>();
 
         for (Categoria categoria : listaDeCategorias){
