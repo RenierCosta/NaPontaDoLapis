@@ -2,7 +2,6 @@ package com.napontadolapis.reniercosta.repository;
 
 import android.content.Context;
 
-import com.napontadolapis.reniercosta.dao.DatabaseHelper;
 import com.napontadolapis.reniercosta.dao.DespesaDAO;
 import com.napontadolapis.reniercosta.dao.ReceitaDAO;
 import com.napontadolapis.reniercosta.model.Constantes;
@@ -27,8 +26,12 @@ public class ResumoLancamentosRepositorio {
     }
 
     public double obterTotalReceitas(Date periodo){
+        Date primeiroDiaDoMes = obterPrimeiroDiaDoMes(periodo);
+        Date ultimoDiaDoMes = obterUltimoDiaDoMes(periodo);
+
         String where = "data between ? and ?";
-        String [] whereArg = new String[]{dateFormat.format(periodo)};
+        String [] whereArg = new String[]{dateFormat.format(primeiroDiaDoMes),
+                dateFormat.format(ultimoDiaDoMes)};
 
         List<Receita> receitas = receitaDAO.listarTodosPorFiltro(where,whereArg);
         double totalReceitas = 0;
@@ -41,8 +44,12 @@ public class ResumoLancamentosRepositorio {
     }
 
     public double obterTotalDespesas(Date periodo){
+        Date primeiroDiaDoMes = obterPrimeiroDiaDoMes(periodo);
+        Date ultimoDiaDoMes = obterUltimoDiaDoMes(periodo);
+
         String where = "data between ? and ?";
-        String [] whereArg = new String[]{dateFormat.format(periodo)};
+        String [] whereArg = new String[]{dateFormat.format(primeiroDiaDoMes),
+                dateFormat.format(ultimoDiaDoMes)};
 
         List<Despesa> despesas = despesaDAO.listarTodosPorFiltro(where,whereArg);
         double totalDespesas = 0;

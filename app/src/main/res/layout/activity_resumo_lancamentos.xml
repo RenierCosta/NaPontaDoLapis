@@ -9,6 +9,21 @@
         android:layout_height="fill_parent"
         android:stretchColumns="1"
         xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Filtrar por:"
+            android:id="@+id/lblDatasParaFiltrarResumos" />
+
+        <Spinner
+            android:layout_width="168dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/spnDatasParaFiltrarResumos"
+            android:spinnerMode="dialog"
+            android:prompt="@string/FiltrarPor" />
+
         <TextView
             android:textSize="20.0dip"
             android:textColor="@color/preto"
@@ -90,24 +105,7 @@
                 android:layout_gravity="right"
                 android:id="@+id/campoResumoSaldoAberto" />
         </TableRow>
-        <TextView
-            android:textSize="20.0dip"
-            android:textColor="@color/preto"
-            android:layout_marginTop="15.0px"
-            android:text="Saldo em Conta" />
-        <View
-            android:background="#ff909090"
-            android:layout_height="2.0dip" />
-        <TableRow>
-            <TextView
-                android:textColor="@color/preto"
-                android:id="@+id/labelResumoSaldoAtualContas"
-                android:text="@string/ResumoSaldoAtualContas" />
-            <TextView
-                android:textColor="@color/azul"
-                android:layout_gravity="right"
-                android:id="@+id/campoResumoSaldoAtualContas" />
-        </TableRow>
+
         <LinearLayout
             android:gravity="bottom"
             android:layout_width="wrap_content"
@@ -119,5 +117,6 @@
                 android:layout_height="fill_parent"
                 android:text="Voltar" />
         </LinearLayout>
+
     </TableLayout>
 </ScrollView>
