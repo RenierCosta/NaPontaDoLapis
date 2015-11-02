@@ -106,6 +106,48 @@
                 android:id="@+id/campoResumoSaldoAberto" />
         </TableRow>
 
+        <TextView
+            android:textSize="20.0dip"
+            android:textColor="@color/preto"
+            android:layout_marginTop="15.0px"
+            android:text="Baixados" />
+        <View
+            android:background="#ff909090"
+            android:layout_height="2.0dip" />
+        <TableRow>
+            <TextView
+                android:textColor="@color/azul"
+                android:id="@+id/labelResumoReceitasBaixado"
+                android:text="@string/ResumoReceitas" />
+            <TextView
+                android:textColor="@color/azul"
+                android:layout_gravity="right"
+                android:id="@+id/campoResumoReceitasBaixado" />
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:textColor="@color/vermelho"
+                android:id="@+id/labelResumoDespesasBaixado"
+                android:text="@string/ResumoDespesas" />
+            <TextView
+                android:textColor="@color/vermelho"
+                android:layout_gravity="right"
+                android:id="@+id/campoResumoDespesasBaixado" />
+        </TableRow>
+        <View
+            android:background="#ff909090"
+            android:layout_height="2.0dip" />
+        <TableRow>
+            <TextView
+                android:textColor="@color/preto"
+                android:id="@+id/labelResumoSaldoBaixado"
+                android:text="@string/ResumoSaldo" />
+            <TextView
+                android:textColor="@color/preto"
+                android:layout_gravity="right"
+                android:id="@+id/campoResumoSaldoBaixado" />
+        </TableRow>
+
         <LinearLayout
             android:gravity="bottom"
             android:layout_width="wrap_content"

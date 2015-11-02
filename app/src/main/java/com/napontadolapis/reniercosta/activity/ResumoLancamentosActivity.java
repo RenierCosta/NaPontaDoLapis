@@ -30,6 +30,9 @@ public class ResumoLancamentosActivity extends Activity{
     private TextView campoResumoReceitasAberto;
     private TextView campoResumoDespesasAberto;
     private TextView campoResumoSaldoAberto;
+    private TextView campoResumoReceitasBaixado;
+    private TextView campoResumoDespesasBaixado;
+    private TextView campoResumoSaldoBaixado;
     private Spinner spnDatasParaFiltrarResumos;
 
     @Override
@@ -104,6 +107,9 @@ public class ResumoLancamentosActivity extends Activity{
         double totalcampoResumoReceitasAberto = resumoLancamentosRepositorio.obterTotalReceitasPendetes((periodo));
         double totalcampoResumoDespesasAberto = resumoLancamentosRepositorio.obterTotalDespesasPendetes((periodo));
         double totalcampoResumoSaldoAberto = totalcampoResumoReceitasAberto - totalcampoResumoDespesasAberto;
+        double totalcampoResumoReceitasBaixado = resumoLancamentosRepositorio.obterTotalReceitasBaixados((periodo));
+        double totalcampoResumoDespesasBaixado = resumoLancamentosRepositorio.obterTotalDespesasBaixados((periodo));
+        double totalcampoResumoSaldoBaixado = totalcampoResumoReceitasBaixado - totalcampoResumoDespesasBaixado;
 
         campoResumoReceitas.setText(localNumberFormat.format(totalResumoReceitas));
         campoResumoDespesas.setText(localNumberFormat.format(totalcampoResumoDespesas));
@@ -111,6 +117,9 @@ public class ResumoLancamentosActivity extends Activity{
         campoResumoReceitasAberto.setText(localNumberFormat.format(totalcampoResumoReceitasAberto));
         campoResumoDespesasAberto.setText(localNumberFormat.format(totalcampoResumoDespesasAberto));
         campoResumoSaldoAberto.setText(localNumberFormat.format(totalcampoResumoSaldoAberto));
+        campoResumoReceitasBaixado.setText(localNumberFormat.format(totalcampoResumoReceitasBaixado));
+        campoResumoDespesasBaixado.setText(localNumberFormat.format(totalcampoResumoDespesasBaixado));
+        campoResumoSaldoBaixado.setText(localNumberFormat.format(totalcampoResumoSaldoBaixado));
     }
 
     private Date obterDataSelecionada() throws ParseException {
@@ -126,6 +135,9 @@ public class ResumoLancamentosActivity extends Activity{
         campoResumoReceitasAberto = (TextView) findViewById(R.id.campoResumoReceitasAberto);
         campoResumoDespesasAberto = (TextView) findViewById(R.id.campoResumoDespesasAberto);
         campoResumoSaldoAberto = (TextView) findViewById(R.id.campoResumoSaldoAberto);
+        campoResumoReceitasBaixado = (TextView) findViewById(R.id.campoResumoReceitasBaixado);
+        campoResumoDespesasBaixado = (TextView) findViewById(R.id.campoResumoDespesasBaixado);
+        campoResumoSaldoBaixado = (TextView) findViewById(R.id.campoResumoSaldoBaixado);
         spnDatasParaFiltrarResumos = (Spinner) findViewById(R.id.spnDatasParaFiltrarResumos);
     }
 }

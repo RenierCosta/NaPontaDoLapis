@@ -110,4 +110,40 @@ public class ResumoLancamentosRepositorio {
 
         return totalDespesas;
     }
+
+    public double obterTotalReceitasBaixados(Date periodo) {
+        Date primeiroDiaDoMes = obterPrimeiroDiaDoMes(periodo);
+        Date ultimoDiaDoMes = obterUltimoDiaDoMes(periodo);
+
+        String where = "(data between ? and ?) and (status <> ?)";
+        String [] whereArg = new String[]{dateFormat.format(primeiroDiaDoMes),
+                dateFormat.format(ultimoDiaDoMes), Constantes.STATUS_PENDENTE};
+
+        List<Receita> receitas = receitaDAO.listarTodosPorFiltro(where,whereArg);
+        double totalReceitas = 0;
+
+        for (Receita receita:receitas){
+            totalReceitas =+ receita.getValor();
+        }
+
+        return totalReceitas;
+    }
+
+    public double obterTotalDespesasBaixados(Date periodo) {
+        Date primeiroDiaDoMes = obterPrimeiroDiaDoMes(periodo);
+        Date ultimoDiaDoMes = obterUltimoDiaDoMes(periodo);
+
+        String where = "(data between ? and ?) and (status <> ?)";
+        String [] whereArg = new String[]{dateFormat.format(primeiroDiaDoMes),
+                dateFormat.format(ultimoDiaDoMes), Constantes.STATUS_PENDENTE};
+
+        List<Despesa> despesas = despesaDAO.listarTodosPorFiltro(where,whereArg);
+        double totalDespesas = 0;
+
+        for (Despesa despesa:despesas){
+            totalDespesas =+ despesa.getValor();
+        }
+
+        return totalDespesas;
+    }
 }
