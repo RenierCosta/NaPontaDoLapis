@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 import com.napontadolapis.reniercosta.R;
 import com.napontadolapis.reniercosta.dao.CategoriaDAO;
+import com.napontadolapis.reniercosta.dao.DespesaDAO;
+import com.napontadolapis.reniercosta.dao.ReceitaDAO;
 import com.napontadolapis.reniercosta.model.Categoria;
 import com.napontadolapis.reniercosta.model.Constantes;
 
@@ -38,9 +40,10 @@ public class CategoriaEdicaoActivity extends Activity {
 
         if (idCategoria != null) {
             carregarDespesaAtual();
-        }else
+        }else {
             btnApagarCategoria.setEnabled(false);
             rdbTipoDespesa.setChecked(true);
+        }
     }
 
     @Override
@@ -73,8 +76,10 @@ public class CategoriaEdicaoActivity extends Activity {
     }
 
     public void onClickApagarCategoria(View view){
-        apagarDespesa(idCategoria);
-        finish();
+        if(validarAntesDeApagar()) {
+            apagarDespesa(idCategoria);
+            finish();
+        }
     }
 
     private void apagarDespesa(String idDespesa) {
@@ -90,9 +95,42 @@ public class CategoriaEdicaoActivity extends Activity {
         }
     }
 
+    private boolean validarAntesDeApagar() {
+        DespesaDAO despesaDAO = new DespesaDAO(this);
+        ReceitaDAO receitaDAO = new ReceitaDAO(this);
+
+        if (despesaDAO.listarTodosPorFiltro("categoria_id = ?", new String[]{idCategoria}).size() > 0){
+            edtDescricao.setError("Categoria pertence a uma despesa");
+            edtDescricao.setFocusable(true);
+            edtDescricao.requestFocus();
+            return false;
+        }else
+        if (receitaDAO.listarTodosPorFiltro("categoria_id = ?", new String[]{idCategoria}).size() > 0){
+            edtDescricao.setError("Categoria pertence a uma receita");
+            edtDescricao.setFocusable(true);
+            edtDescricao.requestFocus();
+            return false;
+        }
+
+        return true;
+    }
+
     public void btnGravarDespesaOnClik(View view) throws ParseException {
-        salvarAlteracoes();
-        this.finish();
+        if (validarInformacoes()) {
+            salvarAlteracoes();
+            this.finish();
+        }
+    }
+
+    private boolean validarInformacoes(){
+        if (edtDescricao.getText().toString().equals("")){
+            edtDescricao.setError("Informe a descrição");
+            edtDescricao.setFocusable(true);
+            edtDescricao.requestFocus();
+            return false;
+        }
+
+        return true;
     }
 
     private void salvarAlteracoes() throws ParseException {
