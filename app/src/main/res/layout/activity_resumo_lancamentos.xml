@@ -157,6 +157,7 @@
                 android:id="@+id/btnVoltarResumo"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
+                android:onClick="btnVoltarOnClick"
                 android:text="Voltar" />
         </LinearLayout>
 

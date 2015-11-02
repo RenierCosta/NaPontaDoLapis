@@ -49,6 +49,10 @@ public class ResumoLancamentosActivity extends Activity{
         CarregarValores();
     }
 
+    public void btnVoltarOnClick(View v){
+        finish();
+    }
+
     private void carregarSpinnerDeFiltroPorData() throws ParseException {
         Date dataInicial;
         Date dataAtual;
