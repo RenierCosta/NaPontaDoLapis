@@ -28,6 +28,43 @@
         android:spinnerMode="dialog"
         android:prompt="@string/FiltrarPor"/>
 
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spnCategoriasParaFiltrarDespesas"
+        android:spinnerMode="dialog"
+        android:prompt="@string/FiltrarPor"
+        android:layout_gravity="right" />
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Todos"
+            android:id="@+id/rdbTodosStatusDespesas"
+            android:onClick="onClickRadioButtonCategoriasDespesas"
+            android:checked="false" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pendentes"
+            android:id="@+id/rdbStatusPendenteDespesas"
+            android:onClick="onClickRadioButtonCategoriasDespesas"
+            android:checked="false" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pagos"
+            android:id="@+id/rdbStatusPagoDespesas"
+            android:onClick="onClickRadioButtonCategoriasDespesas"
+            android:checked="false" />
+    </TableRow>
+
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

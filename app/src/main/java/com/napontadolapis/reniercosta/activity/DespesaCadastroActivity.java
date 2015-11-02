@@ -8,14 +8,19 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 
 import com.napontadolapis.reniercosta.R;
+import com.napontadolapis.reniercosta.dao.CategoriaDAO;
 import com.napontadolapis.reniercosta.dao.DatabaseHelper;
 import com.napontadolapis.reniercosta.dao.DespesaDAO;
+import com.napontadolapis.reniercosta.model.Categoria;
 import com.napontadolapis.reniercosta.model.Constantes;
 import com.napontadolapis.reniercosta.model.Despesa;
+
+import org.apache.http.cookie.params.CookieSpecParamBean;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -35,12 +40,19 @@ public class DespesaCadastroActivity extends Activity {
     private ListView listViewDespesasCadastro;
     private DespesaDAO despesaDAO;
     private Spinner spnDatasParaFiltrarDespesas;
+    private Spinner spnCategoriasParaFiltrarDespesas;
+    private RadioButton rdbStatusTodosDespesas;
+    private RadioButton rdbStatusPendentesDespesas;
+    private RadioButton rdbStatusPagosDespesas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_despesa_cadastro);
-        spnDatasParaFiltrarDespesas = (Spinner) findViewById(R.id.spnDatasParaFiltrarDespesas);
+        carregarComponentesDaTela();
+        carregarSpinnerDeFiltroPorCategoria();
+        rdbStatusTodosDespesas.setChecked(true);
+
         try {
             carregarSpinnerDeFiltroPorData();
         } catch (ParseException e) {
@@ -53,6 +65,46 @@ public class DespesaCadastroActivity extends Activity {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+    }
+
+    private void carregarComponentesDaTela() {
+        spnDatasParaFiltrarDespesas = (Spinner) findViewById(R.id.spnDatasParaFiltrarDespesas);
+        spnCategoriasParaFiltrarDespesas = (Spinner) findViewById(R.id.spnCategoriasParaFiltrarDespesas);
+        rdbStatusTodosDespesas = (RadioButton) findViewById(R.id.rdbTodosStatusDespesas);
+        rdbStatusPendentesDespesas = (RadioButton) findViewById(R.id.rdbStatusPendenteDespesas);
+        rdbStatusPagosDespesas = (RadioButton) findViewById(R.id.rdbStatusPagoDespesas);
+    }
+
+    private void carregarSpinnerDeFiltroPorCategoria() {
+        CategoriaDAO categoriaDAO = new CategoriaDAO(this);
+
+        List<Categoria> categorias = categoriaDAO.listarTodosPorFiltro("tipo = ?",
+                new String [] {String.valueOf(Constantes.ID_TIPO_CATEGORIA_DESPESA)});
+
+        Categoria categoriaVazia = new Categoria();
+        categoriaVazia.setDescricao("Todos");
+        categorias.add(0, categoriaVazia);
+        ArrayAdapter<Categoria> arrayAdapter = new ArrayAdapter<Categoria>(this,
+                android.R.layout.simple_spinner_item, categorias);
+
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spnCategoriasParaFiltrarDespesas.setAdapter(arrayAdapter);
+        spnDatasParaFiltrarDespesas.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                try {
+                    carregarListaDeDespesas(obterDataSelecionada());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     private void carregarSpinnerDeFiltroPorData() throws ParseException {
@@ -164,6 +216,13 @@ public class DespesaCadastroActivity extends Activity {
         SimpleDateFormat format = new SimpleDateFormat(Constantes.MASCARA_DE_DATA_PARA_BANCO);
         String camposParaFiltro = "data BETWEEN ? AND ?";
 
+        if (spnCategoriasParaFiltrarDespesas.getSelectedItemPosition() > 0)
+            camposParaFiltro = camposParaFiltro + " AND categoria_id = ?";
+
+        if (!rdbStatusTodosDespesas.isChecked()){
+            camposParaFiltro += " AND status = ?";
+        }
+
         calendar.setTime(dataParaFiltrar);
         calendar.set(Calendar.DAY_OF_MONTH, 1);
 
@@ -171,10 +230,23 @@ public class DespesaCadastroActivity extends Activity {
         calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
         Date ultimoDiaDoMes = calendar.getTime();
 
+        List<String> listaDosCamposParaFiltro = new ArrayList<>();
+        listaDosCamposParaFiltro.add(format.format(primeiroDiaDoMes));
+        listaDosCamposParaFiltro.add(format.format(ultimoDiaDoMes));
 
-        String [] valoresDosCamposParaFiltro = new String[]{format.format(primeiroDiaDoMes),
-                format.format(ultimoDiaDoMes)};
+        if (spnCategoriasParaFiltrarDespesas.getSelectedItemPosition() > 0)
+            listaDosCamposParaFiltro.add(((Categoria)spnCategoriasParaFiltrarDespesas.getSelectedItem()).getId().toString());
 
+        if (!rdbStatusTodosDespesas.isChecked()){
+            if (rdbStatusPagosDespesas.isChecked()){
+                listaDosCamposParaFiltro.add(Constantes.STATUS_PAGO);
+            }else if (rdbStatusPendentesDespesas.isChecked()){
+                listaDosCamposParaFiltro.add(Constantes.STATUS_PENDENTE);
+            }
+        }
+
+        String [] valoresDosCamposParaFiltro = new String[listaDosCamposParaFiltro.size()];
+        valoresDosCamposParaFiltro = listaDosCamposParaFiltro.toArray(valoresDosCamposParaFiltro);
         List<Despesa> listaDedespesas = despesaDAO.listarTodosPorFiltro(camposParaFiltro,valoresDosCamposParaFiltro);
 
         despesas = new ArrayList<Map<String, Object>>();
@@ -203,5 +275,38 @@ public class DespesaCadastroActivity extends Activity {
             despesas.add(item);
         }
         return despesas;
+    }
+
+    public void onClickRadioButtonCategoriasDespesas(View v){
+        boolean checked = ((RadioButton)v).isChecked();
+
+        switch (v.getId()){
+            case R.id.rdbTodosStatusDespesas:
+                if(checked){
+                    rdbStatusPendentesDespesas.setChecked(false);
+                    rdbStatusPagosDespesas.setChecked(false);
+                }
+
+                break;
+            case R.id.rdbStatusPendenteDespesas:
+                if(checked){
+                    rdbStatusTodosDespesas.setChecked(false);
+                    rdbStatusPagosDespesas.setChecked(false);
+                }
+                break;
+            case R.id.rdbStatusPagoDespesas:
+                if(checked){
+                    rdbStatusTodosDespesas.setChecked(false);
+                    rdbStatusPendentesDespesas.setChecked(false);
+                }
+                break;
+
+        }
+
+        try {
+            carregarListaDeDespesas(obterDataSelecionada());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 }
