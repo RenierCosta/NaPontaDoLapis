@@ -110,7 +110,8 @@
             android:textSize="20.0dip"
             android:textColor="@color/preto"
             android:layout_marginTop="15.0px"
-            android:text="Baixados" />
+            android:text="Pagos e Recebidos"
+            android:id="@+id/" />
         <View
             android:background="#ff909090"
             android:layout_height="2.0dip" />
