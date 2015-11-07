@@ -9,6 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Nova despesa"
+        android:textAppearance="?android:attr/textAppearanceSmall"
         android:drawableLeft="@android:drawable/ic_input_add"
         android:id="@+id/btnNovaDespesaCadastro"
         android:onClick="onClickbtnNovaDespesaCadastro"
@@ -17,7 +18,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Filtrar por:"
         android:id="@+id/lblFiltrarDespesasPor" />
 
@@ -28,13 +29,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Data"
             android:id="@+id/textView" />
 
         <Spinner
             android:layout_width="168dp"
             android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
             android:id="@+id/spnDatasParaFiltrarDespesas"
             android:spinnerMode="dialog"
             android:prompt="@string/FiltrarPor"/>
@@ -47,7 +49,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Categoria"
             android:id="@+id/textView2" />
 
@@ -55,6 +57,7 @@
             android:layout_width="168dp"
             android:layout_height="wrap_content"
             android:id="@+id/spnCategoriasParaFiltrarDespesas"
+            android:textAppearance="?android:attr/textAppearanceSmall"
             android:spinnerMode="dialog"
             android:prompt="@string/FiltrarPor"
             android:layout_gravity="left" />
@@ -67,7 +70,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Status"
             android:id="@+id/textView3" />
 
@@ -75,6 +78,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Todos"
+            android:textAppearance="?android:attr/textAppearanceSmall"
             android:id="@+id/rdbTodosStatusDespesas"
             android:onClick="onClickRadioButtonCategoriasDespesas"
             android:checked="false" />
@@ -83,6 +87,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Pendentes"
+            android:textAppearance="?android:attr/textAppearanceSmall"
             android:id="@+id/rdbStatusPendenteDespesas"
             android:onClick="onClickRadioButtonCategoriasDespesas"
             android:checked="false" />
@@ -91,6 +96,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Pagos"
+            android:textAppearance="?android:attr/textAppearanceSmall"
             android:id="@+id/rdbStatusPagoDespesas"
             android:onClick="onClickRadioButtonCategoriasDespesas"
             android:checked="false" />

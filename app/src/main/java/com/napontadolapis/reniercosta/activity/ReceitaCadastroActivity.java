@@ -78,7 +78,7 @@ public class ReceitaCadastroActivity extends Activity{
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spnCategoriasParaFiltrarReceitas.setAdapter(arrayAdapter);
-        spnDatasParaFiltrarReceitas.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spnCategoriasParaFiltrarReceitas.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 try {
@@ -104,8 +104,12 @@ public class ReceitaCadastroActivity extends Activity{
     }
 
     private void carregarListaDeReceitas(Date dataParaFiltrar) {
-        String[] de = { "VisualizacaoDaDescricao","VisualizacaoDoVencimento", "VisualizacaoDoValor" };
-        int[] para = { R.id.lblDescricaoReceitaCadastro, R.id.lblRecebimentoReceitaCadastro, R.id.lblValorReceitaCadastro};
+        String[] de = { "VisualizacaoDaDescricao","VisualizacaoDoVencimento", "VisualizacaoDoValor",
+                "VisualizacaoDaCategoria", "VisualizacaoDoStatus"};
+
+        int[] para = { R.id.lblDescricaoReceitaCadastro, R.id.lblRecebimentoReceitaCadastro,
+                R.id.lblValorReceitaCadastro,  R.id.lblCategoriaReceitaCadastro,
+                R.id.lblStatusReceitaCadastro};
 
         SimpleAdapter adapter = new SimpleAdapter(this,
                 listarReceitas(dataParaFiltrar), R.layout.lista_de_receitas, de, para);
@@ -214,6 +218,9 @@ public class ReceitaCadastroActivity extends Activity{
             item.put("VisualizacaoDoVencimento", "Recebimento: " + dateFormat.format(recebimento));
             item.put("VisualizacaoDaDescricao", descricao);
             item.put("VisualizacaoDoValor", "Valor: " + NumberFormat.getCurrencyInstance().format(valor));
+            item.put("VisualizacaoDaCategoria", "Categoria: " + receita.getCategoria().getDescricao());
+            item.put("VisualizacaoDoStatus", "Status: " + receita.getStatus());
+
             item.put(DatabaseHelper.Receita.VALOR, valor);
             item.put(DatabaseHelper.Receita.STATUS, status);
             item.put(DatabaseHelper.Receita.CATEGORIA_ID, categoria_Id);

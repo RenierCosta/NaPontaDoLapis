@@ -90,7 +90,7 @@ public class DespesaCadastroActivity extends Activity {
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spnCategoriasParaFiltrarDespesas.setAdapter(arrayAdapter);
-        spnDatasParaFiltrarDespesas.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spnCategoriasParaFiltrarDespesas.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 try {
@@ -188,8 +188,11 @@ public class DespesaCadastroActivity extends Activity {
     }
 
     private void carregarListaDeDespesas(Date dataParaFiltrar) {
-        String[] de = { "VisualizacaoDaDescricao","VisualizacaoDoVencimento", "VisualizacaoDoValor" };
-        int[] para = { R.id.lblDescricaoDespesaCadastro, R.id.lblVencimentoDespesaCadastro, R.id.lblValorDepesaCadastro};
+        String[] de = { "VisualizacaoDaDescricao","VisualizacaoDoVencimento",
+                "VisualizacaoDoValor", "VisualizacaoDaCategoria", "VisualizacaoDoStatus" };
+        int[] para = { R.id.lblDescricaoDespesaCadastro, R.id.lblVencimentoDespesaCadastro,
+                R.id.lblValorDepesaCadastro, R.id.lblCategoriaDespesaCadastro,
+                R.id.lblStatusDespesaCadastro};
 
         SimpleAdapter adapter = new SimpleAdapter(this,
                 listarDespesas(dataParaFiltrar), R.layout.lista_de_despesas, de, para);
@@ -268,6 +271,9 @@ public class DespesaCadastroActivity extends Activity {
             item.put("VisualizacaoDoVencimento", "Vencimento: " + dateFormat.format(vencimento));
             item.put("VisualizacaoDaDescricao", descricao);
             item.put("VisualizacaoDoValor", "Valor: " + NumberFormat.getCurrencyInstance().format(valor));
+            item.put("VisualizacaoDaCategoria", "Categoria: " + despesa.getCategoria().getDescricao());
+            item.put("VisualizacaoDoStatus", "Status: " + despesa.getStatus());
+
             item.put(DatabaseHelper.Despesa.VALOR, valor);
             item.put(DatabaseHelper.Despesa.STATUS, status);
             item.put(DatabaseHelper.Despesa.CATEGORIA_ID, categoria_Id);

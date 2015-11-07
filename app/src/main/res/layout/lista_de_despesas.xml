@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -8,7 +8,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Despesas"
         android:id="@+id/lblDescricaoDespesaCadastro"
         android:layout_alignParentStart="true" />
@@ -16,7 +16,20 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Categoria"
+        android:id="@+id/lblCategoriaDespesaCadastro" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Status"
+        android:id="@+id/lblStatusDespesaCadastro" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Vencimento"
         android:id="@+id/lblVencimentoDespesaCadastro"
         android:layout_below="@+id/lblDescricaoDespesaCadastro"
@@ -25,11 +38,11 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Valor"
         android:id="@+id/lblValorDepesaCadastro"
         android:layout_below="@+id/lblVencimentoDespesaCadastro"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true" /><![CDATA[
 
     ListView
         android:layout_width="wrap_content"
@@ -39,4 +52,5 @@
         android:layout_alignParentStart="true"
         android:layout_marginTop="47dp" />
 
-</RelativeLayout>
+]]>
+</LinearLayout>
