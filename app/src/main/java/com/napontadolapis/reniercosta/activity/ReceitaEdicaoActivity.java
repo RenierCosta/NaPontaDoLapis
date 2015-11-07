@@ -192,6 +192,8 @@ public class ReceitaEdicaoActivity extends Activity{
         btnDataReceita = (Button) findViewById(R.id.btnDataReceita);
         btndataRecebimento.setText(dia + "/" + (mes + 1) + "/" + ano);
         btnDataReceita.setText(dia + "/" + (mes + 1) + "/" + ano);
+        dataReceita = criarData(ano,mes,dia);
+        dataRecebimento = criarData(ano, mes, dia);
 
         edtValor = (EditText) findViewById(R.id.edtValorReceita);
         spnCategoria = (Spinner) findViewById(R.id.spnCategoriaReceita);

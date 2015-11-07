@@ -103,6 +103,9 @@ public class DespesaEdicaoActivity extends Activity {
         btndataDataDespesa = (Button) findViewById(R.id.btnDataDespesa);
         btndataVencimento.setText(dia + "/" + (mes + 1) + "/" + ano);
         btndataDataDespesa.setText(dia + "/" + (mes + 1) + "/" + ano);
+        dataDataDespesa = criarData(ano,mes,dia);
+        dataVencimento = criarData(ano, mes, dia);
+
 
         edtValor = (EditText) findViewById(R.id.edtValorDespesa);
         spnCategoria = (Spinner) findViewById(R.id.spnCategoriaDespesa);
