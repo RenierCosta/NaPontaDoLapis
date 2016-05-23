@@ -241,7 +241,7 @@ public class ReceitaCadastroActivity extends Activity{
         Date dataAtual;
         SimpleDateFormat format = new SimpleDateFormat(Constantes.MASCARA_DE_DATA_PARA_TELA);
 
-        dataInicial = format.parse("01/01/2015");
+        dataInicial = format.parse("01/01/2016");
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(dataInicial);

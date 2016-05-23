@@ -37,7 +37,7 @@ public class ResumoLancamentosRepositorio {
         double totalReceitas = 0;
 
         for (Receita receita:receitas){
-            totalReceitas =+ receita.getValor();
+            totalReceitas = totalReceitas + receita.getValor();
         }
 
         return totalReceitas;
@@ -55,7 +55,7 @@ public class ResumoLancamentosRepositorio {
         double totalDespesas = 0;
 
         for (Despesa despesa:despesas){
-            totalDespesas =+ despesa.getValor();
+            totalDespesas = totalDespesas + despesa.getValor();
         }
 
         return totalDespesas;
@@ -73,7 +73,7 @@ public class ResumoLancamentosRepositorio {
         double totalReceitas = 0;
 
         for (Receita receita:receitas){
-            totalReceitas =+ receita.getValor();
+            totalReceitas = totalReceitas + receita.getValor();
         }
 
         return totalReceitas;
@@ -105,7 +105,7 @@ public class ResumoLancamentosRepositorio {
         double totalDespesas = 0;
 
         for (Despesa despesa:despesas){
-            totalDespesas =+ despesa.getValor();
+            totalDespesas = totalDespesas + despesa.getValor();
         }
 
         return totalDespesas;
@@ -123,7 +123,7 @@ public class ResumoLancamentosRepositorio {
         double totalReceitas = 0;
 
         for (Receita receita:receitas){
-            totalReceitas =+ receita.getValor();
+            totalReceitas = totalReceitas + receita.getValor();
         }
 
         return totalReceitas;
@@ -141,7 +141,7 @@ public class ResumoLancamentosRepositorio {
         double totalDespesas = 0;
 
         for (Despesa despesa:despesas){
-            totalDespesas =+ despesa.getValor();
+            totalDespesas = totalDespesas + despesa.getValor();
         }
 
         return totalDespesas;
